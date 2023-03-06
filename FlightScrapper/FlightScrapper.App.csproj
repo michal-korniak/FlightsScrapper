@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FlightScrapper.Ryanair\FlightScrapper.Ryanair.csproj" />
+    <ProjectReference Include="..\FlightScrapper.Wizzair\FlightScrapper.Wizzair.csproj" />
   </ItemGroup>
 
 </Project>

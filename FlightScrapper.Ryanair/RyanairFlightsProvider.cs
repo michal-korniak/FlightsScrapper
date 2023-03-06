@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace FlightScrapper.Ryanair
 {
-    public class RyanairFlightProvider : IFlightProvider
+    public class RyanairFlightsProvider : IFlightsProvider
     {
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange startDateRange, DateRange endDateRange)
         {
@@ -15,7 +15,7 @@ namespace FlightScrapper.Ryanair
 
             RyanairApiClient client = new();
 
-            IEnumerable<string> availableDestinationsAirportsCodes = await GetAvailableDestinationsAirportsCodesAsync(client, airportCode);
+            IEnumerable<string> availableDestinationsAirportsCodes = await GetAvailableDestinationsAirportsCodes(client, airportCode);
             List<Flight> flights = new();
             foreach (var destinationAirportCode in availableDestinationsAirportsCodes)
             {
@@ -41,10 +41,10 @@ namespace FlightScrapper.Ryanair
             }
         }
 
-        private async Task<IEnumerable<string>> GetAvailableDestinationsAirportsCodesAsync(RyanairApiClient ryanairApiClient, AirportCode originAirportCode)
+        private async Task<IEnumerable<string>> GetAvailableDestinationsAirportsCodes(RyanairApiClient ryanairApiClient, AirportCode originAirportCode)
         {
             IEnumerable<RouteDto> routes = await ryanairApiClient.GetRoutes(originAirportCode.ToString());
-            return routes.Select(x => x.ArrivalAirport!.Code!);
+            return routes.Select(x => x.ArrivalAirport.Code);
         }
 
         private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange startDateRange, DateRange endDateRange)
@@ -63,9 +63,9 @@ namespace FlightScrapper.Ryanair
                 ToUs = "AGREED"
             };
             var flightAvailability = await ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
-            var flights = flightAvailability!.Trips!.SelectMany(trip
-                => trip!.Dates.SelectMany(date
-                => date!.Flights!.Where(flight => flight.RegularFare != null).Select(flight
+            var flights = flightAvailability.Trips.SelectMany(trip
+                => trip.Dates.SelectMany(date
+                => date.Flights.Where(flight => flight.RegularFare != null).Select(flight
                 => new Flight(trip.OriginName, trip.Origin, trip.DestinationName, trip.Destination, flight.Time.First(), flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value, "Ryanair"))));
 
             var filteredFlights = flights.Where(flight =>
