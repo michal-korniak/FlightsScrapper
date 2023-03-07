@@ -6,7 +6,7 @@ namespace FlightScrapper.Wizzair.Extensions
     public class DetailedHttpRequestException: HttpRequestException
     {
         public int Code { get; }
-        public string Message { get; }
+        public override string Message { get; }
 
         public DetailedHttpRequestException(int code, string message)
         {

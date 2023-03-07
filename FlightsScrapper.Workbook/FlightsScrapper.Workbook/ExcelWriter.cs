@@ -36,6 +36,6 @@ public static class ExcelWriter
         ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Trips");
         IEnumerable<TripExcelModel> tripsExcelModels = trips.Select(trip => new TripExcelModel(trip));
         worksheet.Cells.LoadFromCollection(tripsExcelModels, true, TableStyles.Light1);
-        //worksheet.Columns.AutoFit();
+        worksheet.Columns.AutoFit();
     }
 }

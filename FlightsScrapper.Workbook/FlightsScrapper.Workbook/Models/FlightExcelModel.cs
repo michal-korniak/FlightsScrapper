@@ -15,9 +15,13 @@ namespace FlightsScrapper.Workbook.Models
         public string DestinationCity { get; private set; }
         public string DestinationAirportCode { get; private set; }
 
-        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm:ss")]
+        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
         public DateTime Date { get; private set; }
+
+
+        [EpplusTableColumn(NumberFormat = "###0.00 PLN")]
         public decimal? PriceInPln { get; private set; }
+
         public string AirlineName { get; private set; }
 
         public FlightExcelModel(Flight flight)

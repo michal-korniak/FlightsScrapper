@@ -47,7 +47,6 @@ public class Program
         }
 
         List<Trip> trips = TripsFactory.CreateTrips(AirportsCodes, allFlights).ToList();
-
         ExcelWriter.Write(allFlights, trips);
     }
 

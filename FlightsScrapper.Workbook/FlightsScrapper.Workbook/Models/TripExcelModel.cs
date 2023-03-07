@@ -13,17 +13,28 @@ namespace FlightsScrapper.Workbook.Models
         public string OriginCity { get; }
         public string DestinationCity { get; }
 
-        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm:ss")]
+        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
         public DateTime ArrivalFlightDate { get; }
         public DayOfWeek ArrivalFlightDayOfWeek { get; }
 
-        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm:ss")]
+        [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
         public DateTime ReturnFlightDate { get; }
         public DayOfWeek ReturnFlightDayOfWeek { get; }
+
+        [EpplusTableColumn(NumberFormat = "###0.00 PLN")]
         public decimal? ArrivalFlightPriceInPln { get; }
+
+        [EpplusTableColumn(NumberFormat = "###0.00 PLN")]
         public decimal? ReturnFlightPriceInPln { get; }
+
+        [EpplusTableColumn(NumberFormat = "###0.00 PLN")]
         public decimal? TotalPrice { get; }
+
+        [EpplusTableColumn(NumberFormat = "###0.0")]
         public TimeSpan Length { get; }
+
+        public string ArrivalFlightCompany { get; }
+        public string ReturnFlightCompany { get; }
 
         public TripExcelModel(Trip trip)
         {
@@ -37,6 +48,8 @@ namespace FlightsScrapper.Workbook.Models
             ReturnFlightPriceInPln = trip.ReturnFlight.PriceInPln;
             TotalPrice = trip.ArrivalFlight.PriceInPln + trip.ReturnFlight.PriceInPln;
             Length = ReturnFlightDate - ArrivalFlightDate;
+            ArrivalFlightCompany = trip.ArrivalFlight.AirlineName;
+            ReturnFlightCompany = trip.ReturnFlight.AirlineName;
         }
     }
 }
