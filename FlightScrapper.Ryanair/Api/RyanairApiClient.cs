@@ -13,6 +13,7 @@ namespace FlightScrapper.Ryanair.Api
         public RyanairApiClient()
         {
             _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
 
         public async Task<FlightAvailabilityDto> GetFlightAvailability(FlightAvailabilityParametersDto parameters)

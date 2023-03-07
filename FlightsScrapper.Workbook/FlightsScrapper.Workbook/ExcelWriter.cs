@@ -7,7 +7,7 @@ namespace FlightsScrapper.Workbook;
 
 public static class ExcelWriter
 {
-    public static void Write(List<Flight> flights)
+    public static void Write(IEnumerable<Flight> flights)
     {
         string filePath = $"Flights_{DateTime.Now.Ticks}.xlsx";
 

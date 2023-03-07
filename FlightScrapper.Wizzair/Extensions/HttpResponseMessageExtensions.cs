@@ -3,6 +3,18 @@ using System.Threading.Tasks;
 
 namespace FlightScrapper.Wizzair.Extensions
 {
+    public class DetailedHttpRequestException: HttpRequestException
+    {
+        public int Code { get; }
+        public string Message { get; }
+
+        public DetailedHttpRequestException(int code, string message)
+        {
+            Code = code;
+            Message = message;
+        }
+    }
+
     public static class HttpResponseMessageExtensions
     {
         // Do same as EnsureSuccessStatusCode, but throw more meaningful exception
@@ -19,9 +31,7 @@ namespace FlightScrapper.Wizzair.Extensions
                 message.Content.Dispose();
             }
 
-            var contentMessage = string.IsNullOrWhiteSpace(content) ? string.Empty : $" Content: {content}";
-            string exceptionMessage = $"Response status code does not indicate success: {(int)message.StatusCode} ({message.ReasonPhrase}).{contentMessage}";
-            throw new HttpRequestException(exceptionMessage);
+            throw new DetailedHttpRequestException((int)message.StatusCode, content);
         }
     }
 }

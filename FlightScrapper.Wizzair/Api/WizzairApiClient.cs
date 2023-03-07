@@ -18,6 +18,7 @@ namespace FlightScrapper.Ryanair.Api
         public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken)
         {
             _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(30);
 
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;

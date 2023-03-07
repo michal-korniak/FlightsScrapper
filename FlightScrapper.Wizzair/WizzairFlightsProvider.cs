@@ -2,6 +2,7 @@
 using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
+using FlightScrapper.Wizzair.Extensions;
 
 namespace FlightScrapper.Wizzair
 {
@@ -38,9 +39,12 @@ namespace FlightScrapper.Wizzair
                     IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, cityNameByAirportCodeDict);
                     flights.AddRange(fightsForDestination);
                 }
-                catch (HttpRequestException ex)
+                catch (DetailedHttpRequestException ex)
                 {
-                    Console.WriteLine($"Wizzair: Connection ignored, because of exception: {airportCode}->{destinationAirportCode}.");
+                    if (ex.Message != "{\"validationCodes\":[\"InvalidMarket\"]}")
+                    {
+                        throw;
+                    }
                 }
 
             }

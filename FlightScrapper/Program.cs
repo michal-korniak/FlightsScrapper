@@ -11,21 +11,20 @@ namespace FlightScrapper.App;
 
 public class Program
 {
-    private readonly static string WizzairCookie = "bm_sz=24F6EAE24E1C91B9D3E811C40C7611C4~YAAQn2ReaLp5U7iGAQAAiQL2vBMzBtFZ4YlR3WxKHDLvi7MNVr+4Z/KbV0x0tlFzVUE8dOP56tuSS+YDb66P6qGR8X8d5KQOOkc6bEAgAj9QBrqjpOVi2IisP7DSAEUwoeZ4Eo7JN5z2US1KsxXvvKHlIIIwjIOZK22aiLsDMhfVQQb58xZUh0UfKwOwvM+VxNfi/l+Lkqq1oqReg2MoAdINgWBCc0cDyfqK4FZqAlIxXRni8lm0kXYSih3y4csZCC9qdG+Yi3+8iuaBkqR2OFnmmdlHEj3HesYNvF72n9bIaNwjzCX67IfE1DoiuMQ4b5lAnlHqKEsitUaxs0hYEaG2WfFBIhbXp++vO+GSshduhFcqz83ZytzdMIRNl/ewpnsNkqqBAdvFHwJr6kn8ImOe6ohLPQFjOOTnczgxM0I4nd5svJm1UfrjZg==~3355956~4403768; ak_bmsc=2546662C084E83010120344A4FBE54DC~000000000000000000000000000000~YAAQn2ReaN95U7iGAQAA5gX2vBOHXZBLqsLdpHbwi9Qan+yex2gzr8ksqfWYA/POnoOqWUeWJXpgrDQV8XEAcysKIjH3wF+HdgKKIOBxOCV124w8T2/axldks9eG732p+YOMtlJcbE0VQPVCdmDV2ByRHNzIS9L73xRsKa/Bq6KGRmsr1OakSgMWDrYgUgCzwg87Tc5w22tQ5B4OV8qtsXYrf2Cj5IT4G/974LkPXa2dZlAX3jGdiU5f3fuBxO+VsRHtqXVmpMClNxaGeRFGE0BsQgz1AgL+C5l1uy4gBVQTHkFeWjA/q0hehFLFa+sXQ8uruzHNirtnXWAVOhVqym9eBzsnTq1YqjEhGchEy0cQjN4I4/yeMWly7dkygiX/apUQzdNSe+kGRzTVuu3CoN+2SJNJaxT2oMzGYMZq/lBh9kyJ6brS+sRz0fwZzN9IsWJos6ap7TbwSOr9oWmSZO6M8bbP+8DgZaYiLdxMBda4VD5IHtMD9edXzR2tmwFta/qIb2OEnth6ZuIGCUChBbavR0QW; ASP.NET_SessionId=jrbs1pqpfnxzduthgc1b0cch; RequestVerificationToken=c1104841444c4e6ea30f67b262bcdaad; _fbp=fb.1.1678207486530.274994336; _gcl_au=1.1.480142282.1678207487; _gid=GA1.2.734996339.1678207487; _ga_G2EKSJBE0J=GS1.1.1678207486.1.1.1678208549.0.0.0; _ga=GA1.2.2047669040.1678207487; _abck=64E7D99DE11019482D523742465167C0~-1~YAAQTAxAFz3KiIeGAQAAssQHvQnEL2RXmbWjGnPToTtUzoKZu27Y5wFJTdRLBbBsbatlnTzfZBOuMbm1VPNZajXUEKFqkMi4fhlDqP+vy4xopn/BtyqlaRQPzXCKclZ876725B8tkyYEu50S3Xc/ZaG5bVwgw6Ij4JIV0K67Mvi+AleJApPzoMNU6mheb2zeoBqBf+qAD7KzJnN6SgDSW4kMtwNFUC48CVRZv023F8Aot2FHY8u+WWzNoySy0C15ltTJ3AtL1U+8luTni1hyW1y6loUcu6osmfrNv6CRllp8yv+3EjNQnV6DxMjt19I5JISwffQDnLKgtsIDi8c9QEobi7lKNtMySwzqanAvqhNaeMhc4HLLEnTY1eXCZPLQhdxDJ/IJZ2uPrZYBnAyrybKxrxaE465MNIrQ9MO6OU1ULY6ywrFiuOcKwjMAIoYCXxkW5y78zrVSONf3be7iPyiqEcFl~-1~-1~-1; bm_sv=2549D3402FD4063DC756BB2AC0E81604~YAAQTAxAF0bKiIeGAQAAu8UHvRPTR1IavIDZhw+NV+aYpy/9cOatyzP67/aenfhGtQno6M6vu5tTHJ0KA+a5CGacui68kcP5xOxumwyonNh16UhmDcPbQmpwvuD/WoBlyVC6MSrUKtm/ZX1Mgae6MML/fsQdFie7zTO25HL2nznYqXASqH149Vohnk0luCuhI0NyzhZDEmJgDRVVh+BVMzpzXiuOvDRo75OHNC0Pm4iEL1c2xaSzTIp1Qb3G4LUL6z4=~1";
-    private readonly static string WizzairRequestVerificationToken = "c1104841444c4e6ea30f67b262bcdaad";
-    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 3, 8), new DateTime(2023, 4, 1));
-    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 3, 8), new DateTime(2023, 4, 1));
+    private readonly static string WizzairCookie = "ASP.NET_SessionId=bplo32v54ee3xmw2vogaux3a; bm_mi=436844B7D02EF5B0C31D3C8A0C9AC4DF~YAAQTAxAFwkgloeGAQAAtj/GvRMP7Okm7xeBt7ZcLln1y2gtKEcMq8VL84shFhhyF+BN5ehvuqavfY7TglIHfb0Rv2HCphiTlarBdHC8TH6DFAo3nK2bLgia/twch7uNdWogkYHVcv6H4augM3N46wB4M6SyrVcNCJv/W52kNbwCAH5jd0fhm+EhFS/goTsI0DgBnkVmupwcmQNT8+0QKjJFa7N/tWze4AwrEFtp7Dh6znaDTRPbPqO15VPueCNjObqkKFNQK3vWFuD2VABA24kziDly5JIyBo2sV6jH4TqC+V7qDtoGngDN6g/SYC78FuX9GogiOnPvGNFFt7TLdAo/r9W4a24ZV9HXKhAnWSM92QnMO5qQPfGzhTw=~1; bm_sv=123388721AAAFD452DC19EB6643845C8~YAAQTAxAF1YiloeGAQAASk3GvRP8/eTv74M9KKGDRUYGIgJlAzPt6UaMwRGohjT08mVTljQDA3at8+a6RST2S0DAidEY1f+uSLJMZeEXobM/OmUn0PPwMPJkr8oZFotVXt39Y7zZPzOuionXl4gOIsvEvEewAiqWLua0A32Eq3YEWey4BnfSH1YPCkMtoeT9k7bQ4t6DOxngE35YMaELsiBs+harPoibVICtOMETeLGndp7Z5Ym+/i6f/cY98zv6rQE=~1; ak_bmsc=C094306AAF6DCFA6A6EF3030FDCA70A3~000000000000000000000000000000~YAAQn2ReaOznur2GAQAAqgbZvRO2HZbLa4RFOXB5qFOq6NaiythvaZ2u1FYMFYsqh95AigYgVDR2jzrMQRLAVo6qUFx7vrZ22rRjpHxIXvGoXWOvCrlBALxq9eJuOddcBwtOdihWnMOhSSqp/F/3dIuQ3wJ974VU+U5L92XpYFH+eRQi8HIXjhca1StujahwmQzwZRb+A/3RGzdIYgP3WHCujggZQ8Fyk0b6Wg54zrvWiBxzN3nnq8bxrfW04xmv5GQBxmjz+W/XISS1bgIAxLkYwyCsAOZrLQU4M8Snyb15+kd/+wffGMLdmhH6feWKHOI8VYUemoEy6dPIujlgmAfpLHHbfhebil2tV1riVrm0pmdfdyJD77J3LcZ6CQzZk8NQaAiDMISZ/8ZmHFBjQa6kRo70FWggUENWPE2jJWhcRI//qKrPt1OrBUMVwPxHbVRgPxTKoefpkaPQcZcejG1RMrHppfyz0mxBhf7q6JJENn7YzLrdxLpeE7erF4kSKHZ8VvR6uLm4; bm_sz=5585DA73AB1A97EBCEF96A54404031EF~YAAQn2ReaO3nur2GAQAAqgbZvRPb58DswXaOPXWwVKB4fEROKzN3+EkgBTMjrj1ujevWy9McLxBI/bfpaB6Zi8dXfDL4u3WYoWDg47PmMmgXpPsznFpjsQTMtVb768T42y16M3qMnvE4QTB5gaMIepqI5oQn9q5qUFky2BiNulWECFaFMK5E31y2LEysqaXMOP+7kRnJVnSzw8q7H8gzvncCbKxl8AQY5GWGmTxFjUBQ4+MxXX/11Pvv26tl5tbnFJViaSOjDdCwTGGpuasA5ED5eIE2/RCmcPKEFBzkD4lU+6LZGUwXNYpi3wABiw3L3CPe9HHDjXB6cdcHI5Ncm3DzDqBXRdMML6nG08eInJ5bbvdy3TC9ixKTfOWfUUm2+hJzJMilNhgsQGbCqS3D3jO3X3BrD3HJb/KK9Mnu/v8bNE+157yQXFPfA2nv6BNM6BdFvrnM1xpzQ77XD7cfe4HY~3686726~4272706; RequestVerificationToken=77632ac7b3034e5ca659aca465aa9013; _abck=1A042ADF9189B402227285B407781B30~-1~YAAQZQxAF111v72GAQAArBXrvQmEpLLKuZCPfwUhI80+EitIXeYCHtVJFIoqpHZz58JfrMOv5bi60jq+yteXfgbd4F7eHH+gQqr9y95/c0J5SUqJrQWZsOpol17UD+eNH9Xd1SkUXaCme4KkhdjwNdV8kHOqKmMGa3uZ16FRZtJcRLXiS3BhzP24fKOVPbdQkvpEBunHJn21W1I0HAreJOoqjT9/2ZLRgjzTcsYbbu4d/rMgb8CNM7A6BG7HqV6h4QAkhxyYqR8ZK4Jc8XOmX8Let6p2ahGPj6Ld4s4/1+G2Tk8Q0Crn2LhMn2P/jN3cZEIUvZyaUQ5dptq0PjiqJjzU5zAiAp/e24kpAY/BbWcJaUVfnzOK/ElZHcTHCRMubzVN9tVPbm4dL+RGwsQY2yUPHYKfa0Uwg9FFegcXvEbJZyOcau0ep6npWvzg+V5dMZKlPrvx~-1~-1~-1";
+    private readonly static string WizzairRequestVerificationToken = "77632ac7b3034e5ca659aca465aa9013";
+    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 3, 15), new DateTime(2023, 3, 19));
+    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 3, 20), new DateTime(2023, 3, 21));
     private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE };
     private readonly static string JsonFileName = "allFlights.json";
     private readonly static bool IsOfflineMode = true;
 
     public static async Task Main()
     {
-        const string jsonFile = "allFlights.json";
         IEnumerable<Flight> allFlights;
-        if (IsOfflineMode && File.Exists(jsonFile))
+        if (IsOfflineMode && File.Exists(JsonFileName))
         {
-            var jsonString = await File.ReadAllTextAsync("allFlights.json");
+            var jsonString = await File.ReadAllTextAsync(JsonFileName);
             allFlights = JsonSerializer.Deserialize<List<Flight>>(jsonString)!.OrderBy(x => x.PriceInPln).ToList();
         }
         else
@@ -42,10 +41,13 @@ public class Program
 
 
             string jsonString = JsonSerializer.Serialize(allFlights.OrderBy(x => x.PriceInPln));
-            await File.WriteAllTextAsync("allFlights.json", jsonString);
+            await File.WriteAllTextAsync(JsonFileName, jsonString);
         }
 
-        allFlights.ForEach(Console.WriteLine);
+        foreach (Flight flight in allFlights)
+        {
+            Console.WriteLine(flight);
+        }
         ExcelWriter.Write(allFlights);
     }
 
