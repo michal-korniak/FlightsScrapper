@@ -14,7 +14,7 @@ namespace FlightScrapper.Wizzair
             _wizzairCookie = wizzairCookie;
         }
 
-        public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange startDateRange, DateRange endDateRange)
+        public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
             WizzairApiClient client = new(_wizzairCookie);
             MapDto mapDto = await client.GetMap();
@@ -32,7 +32,7 @@ namespace FlightScrapper.Wizzair
             {
                 try
                 {
-                    IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, startDateRange, endDateRange, cityNameByAirportCodeDict);
+                    IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, cityNameByAirportCodeDict);
                     flights.AddRange(fightsForDestination);
                 }
                 catch (HttpRequestException ex)
@@ -60,7 +60,7 @@ namespace FlightScrapper.Wizzair
             return mapDto.Cities.SingleOrDefault(city => city.Iata == originAirportCode.ToString()).Connections.Select(connection => connection.Iata);
         }
 
-        private async Task<IEnumerable<Flight>> GetAvailableFlights(WizzairApiClient wizzairApiClient, string originAirportCode, string destinationAirportCode, DateRange startDateRange, DateRange endDateRange,
+        private async Task<IEnumerable<Flight>> GetAvailableFlights(WizzairApiClient wizzairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange,
             Dictionary<string, string> cityNameByAirportCodeDict)
         {
             var timetableRequest = new TimetableRequestDto()
@@ -72,15 +72,15 @@ namespace FlightScrapper.Wizzair
                     {
                         DepartureStation=originAirportCode,
                         ArrivalStation=destinationAirportCode,
-                        From=startDateRange.StartDate.ToString("yyyy-MM-dd"),
-                        To=startDateRange.EndDate.ToString("yyyy-MM-dd")
+                        From=arrivalDateRange.StartDate.ToString("yyyy-MM-dd"),
+                        To=arrivalDateRange.EndDate.ToString("yyyy-MM-dd")
                     },
                     new FlightRequestDto()
                     {
                         DepartureStation=destinationAirportCode,
                         ArrivalStation=originAirportCode,
-                        From=endDateRange.StartDate.ToString("yyyy-MM-dd"),
-                        To=endDateRange.EndDate.ToString("yyyy-MM-dd")
+                        From=returnDateRange.StartDate.ToString("yyyy-MM-dd"),
+                        To=returnDateRange.EndDate.ToString("yyyy-MM-dd")
                     }
                 }
             };
@@ -100,11 +100,11 @@ namespace FlightScrapper.Wizzair
             {
                 if (flight.OriginAirportCode == originAirportCode)
                 {
-                    return startDateRange.Includes(flight.Date);
+                    return arrivalDateRange.Includes(flight.Date);
                 }
                 else
                 {
-                    return endDateRange.Includes(flight.Date);
+                    return returnDateRange.Includes(flight.Date);
                 }
             });
 

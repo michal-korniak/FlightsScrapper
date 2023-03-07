@@ -1,7 +1,9 @@
 ﻿using FlightScrapper.Core;
 using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Ryanair.Api.RequestModels;
+using FlightScrapper.Ryanair.Api.ResponseModels.FlightAvailability;
 using FlightScrapper.Ryanair.Api.ResponseModels.Routes;
+using FlightScrapper.Ryanair.Factories;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 
@@ -9,36 +11,21 @@ namespace FlightScrapper.Ryanair
 {
     public class RyanairFlightsProvider : IFlightsProvider
     {
-        public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange startDateRange, DateRange endDateRange)
-        {
-            ValidateParameters(endDateRange, startDateRange);
+        private const int MaxNumberOfDatsToBeRequested = 6;
 
+        public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
+        {
             RyanairApiClient client = new();
 
             IEnumerable<string> availableDestinationsAirportsCodes = await GetAvailableDestinationsAirportsCodes(client, airportCode);
             List<Flight> flights = new();
             foreach (var destinationAirportCode in availableDestinationsAirportsCodes)
             {
-                IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, startDateRange, endDateRange);
+                IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange);
                 flights.AddRange(fightsForDestination);
             }
 
             return flights;
-        }
-
-        private void ValidateParameters(DateRange dateInRange, DateRange dateOutRange)
-        {
-            ArgumentNullException.ThrowIfNull(dateInRange);
-            if (dateInRange.DaysDiffrence.TotalDays > 6)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(dateInRange)}. Difference between two dates should not be more than 6 days.");
-            }
-
-            ArgumentNullException.ThrowIfNull(dateOutRange);
-            if (dateInRange.DaysDiffrence.TotalDays > 6)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(dateOutRange)}. Difference between two dates should not be more than 6 days.");
-            }
         }
 
         private async Task<IEnumerable<string>> GetAvailableDestinationsAirportsCodes(RyanairApiClient ryanairApiClient, AirportCode originAirportCode)
@@ -47,36 +34,54 @@ namespace FlightScrapper.Ryanair
             return routes.Select(x => x.ArrivalAirport.Code);
         }
 
-        private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange startDateRange, DateRange endDateRange)
+        private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
-            FlightAvailabilityParametersDto flightAvailabilityParameters = new()
+            IEnumerable<DateRange> arrivalDateChunks = arrivalDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+            IEnumerable<DateRange> returnDateChunks = returnDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+            int leftArrivalDateChunks = arrivalDateChunks.Count();
+            int leftReturnDateChunks = returnDateChunks.Count();
+
+            List<Task<FlightAvailabilityDto>> flightAvailabilitiesTasks = new();
+            while (leftArrivalDateChunks > 0 || leftReturnDateChunks > 0)
             {
-                DateIn = endDateRange.StartDate.ToString("yyyy-MM-dd"),
-                FlexDaysBeforeIn = 0,
-                FlexDaysIn = (int)endDateRange.DaysDiffrence.TotalDays,
-                DateOut = startDateRange.StartDate.ToString("yyyy-MM-dd"),
-                FlexDaysBeforeOut = 0,
-                FlexDaysOut = (int)startDateRange.DaysDiffrence.TotalDays,
-                Origin = originAirportCode,
-                Destination = destinationAirportCode,
-                RoundTrip = true,
-                ToUs = "AGREED"
-            };
-            var flightAvailability = await ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
-            var flights = flightAvailability.Trips.SelectMany(trip
+                FlightAvailabilityParametersDto flightAvailabilityParameters = null;
+                if (leftArrivalDateChunks > 0 && leftReturnDateChunks > 0)
+                {
+                    var arrivalDateRangeForChunk = arrivalDateChunks.ElementAt(--leftArrivalDateChunks);
+                    var returnDateRangeForChunk = returnDateChunks.ElementAt(--leftReturnDateChunks);
+                    flightAvailabilityParameters = FlightAvailabilityParametersDtoFactory.TwoWayFlight(originAirportCode, destinationAirportCode, arrivalDateRange, returnDateRange);
+                }
+                else if (leftArrivalDateChunks > 0)
+                {
+                    var arrivalDateRangeForChunk = arrivalDateChunks.ElementAt(--leftArrivalDateChunks);
+                    flightAvailabilityParameters = FlightAvailabilityParametersDtoFactory.OneWayFlight(originAirportCode, destinationAirportCode, arrivalDateRange);
+                }
+                else if (leftReturnDateChunks > 0)
+                {
+                    var returnDateRangeForChunk = returnDateChunks.ElementAt(--leftReturnDateChunks);
+                    flightAvailabilityParameters = FlightAvailabilityParametersDtoFactory.OneWayFlight(destinationAirportCode, originAirportCode, returnDateRange);
+                }
+                var flightAvailabilityTask = ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
+                flightAvailabilitiesTasks.Add(flightAvailabilityTask);
+            }
+
+            FlightAvailabilityDto[] flightAvailabilities = await Task.WhenAll(flightAvailabilitiesTasks);
+
+            var flights = flightAvailabilities.SelectMany(flightAvailability 
+                => flightAvailability.Trips.SelectMany(trip
                 => trip.Dates.SelectMany(date
                 => date.Flights.Where(flight => flight.RegularFare != null).Select(flight
-                => new Flight(trip.OriginName, trip.Origin, trip.DestinationName, trip.Destination, flight.Time.First(), flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value, "Ryanair"))));
+                => new Flight(trip.OriginName, trip.Origin, trip.DestinationName, trip.Destination, flight.Time.First(), flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value, "Ryanair")))));
 
             var filteredFlights = flights.Where(flight =>
             {
                 if (flight.OriginAirportCode == originAirportCode)
                 {
-                    return startDateRange.Includes(flight.Date);
+                    return arrivalDateRange.Includes(flight.Date);
                 }
                 else
                 {
-                    return endDateRange.Includes(flight.Date);
+                    return returnDateRange.Includes(flight.Date);
                 }
             });
 

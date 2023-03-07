@@ -6,6 +6,7 @@ namespace FlightScrapper.Core
         LUZ,
         KRK,
         WMI,
-        WAW
+        WAW,
+        RZE
     }
 }
