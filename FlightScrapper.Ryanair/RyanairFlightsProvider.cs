@@ -67,11 +67,18 @@ namespace FlightScrapper.Ryanair
 
             FlightAvailabilityDto[] flightAvailabilities = await Task.WhenAll(flightAvailabilitiesTasks);
 
-            var flights = flightAvailabilities.SelectMany(flightAvailability 
+            var flights = flightAvailabilities.SelectMany(flightAvailability
                 => flightAvailability.Trips.SelectMany(trip
                 => trip.Dates.SelectMany(date
                 => date.Flights.Where(flight => flight.RegularFare != null).Select(flight
-                => new Flight(trip.OriginName, trip.Origin, trip.DestinationName, trip.Destination, flight.Time.First(), flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value, "Ryanair")))));
+                => new Flight(trip.OriginName,
+                    trip.Origin,
+                    trip.DestinationName,
+                    trip.Destination,
+                    flight.Time.First(),
+                    flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value,
+                    "Ryanair"))))
+                );
 
             var filteredFlights = flights.Where(flight =>
             {
