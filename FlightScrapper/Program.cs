@@ -13,13 +13,13 @@ namespace FlightScrapper.App;
 
 public class Program
 {
-    private readonly static string WizzairCookie = "ASP.NET_SessionId=bplo32v54ee3xmw2vogaux3a; bm_mi=436844B7D02EF5B0C31D3C8A0C9AC4DF~YAAQTAxAFwkgloeGAQAAtj/GvRMP7Okm7xeBt7ZcLln1y2gtKEcMq8VL84shFhhyF+BN5ehvuqavfY7TglIHfb0Rv2HCphiTlarBdHC8TH6DFAo3nK2bLgia/twch7uNdWogkYHVcv6H4augM3N46wB4M6SyrVcNCJv/W52kNbwCAH5jd0fhm+EhFS/goTsI0DgBnkVmupwcmQNT8+0QKjJFa7N/tWze4AwrEFtp7Dh6znaDTRPbPqO15VPueCNjObqkKFNQK3vWFuD2VABA24kziDly5JIyBo2sV6jH4TqC+V7qDtoGngDN6g/SYC78FuX9GogiOnPvGNFFt7TLdAo/r9W4a24ZV9HXKhAnWSM92QnMO5qQPfGzhTw=~1; bm_sv=123388721AAAFD452DC19EB6643845C8~YAAQTAxAF1YiloeGAQAASk3GvRP8/eTv74M9KKGDRUYGIgJlAzPt6UaMwRGohjT08mVTljQDA3at8+a6RST2S0DAidEY1f+uSLJMZeEXobM/OmUn0PPwMPJkr8oZFotVXt39Y7zZPzOuionXl4gOIsvEvEewAiqWLua0A32Eq3YEWey4BnfSH1YPCkMtoeT9k7bQ4t6DOxngE35YMaELsiBs+harPoibVICtOMETeLGndp7Z5Ym+/i6f/cY98zv6rQE=~1; ak_bmsc=C094306AAF6DCFA6A6EF3030FDCA70A3~000000000000000000000000000000~YAAQn2ReaOznur2GAQAAqgbZvRO2HZbLa4RFOXB5qFOq6NaiythvaZ2u1FYMFYsqh95AigYgVDR2jzrMQRLAVo6qUFx7vrZ22rRjpHxIXvGoXWOvCrlBALxq9eJuOddcBwtOdihWnMOhSSqp/F/3dIuQ3wJ974VU+U5L92XpYFH+eRQi8HIXjhca1StujahwmQzwZRb+A/3RGzdIYgP3WHCujggZQ8Fyk0b6Wg54zrvWiBxzN3nnq8bxrfW04xmv5GQBxmjz+W/XISS1bgIAxLkYwyCsAOZrLQU4M8Snyb15+kd/+wffGMLdmhH6feWKHOI8VYUemoEy6dPIujlgmAfpLHHbfhebil2tV1riVrm0pmdfdyJD77J3LcZ6CQzZk8NQaAiDMISZ/8ZmHFBjQa6kRo70FWggUENWPE2jJWhcRI//qKrPt1OrBUMVwPxHbVRgPxTKoefpkaPQcZcejG1RMrHppfyz0mxBhf7q6JJENn7YzLrdxLpeE7erF4kSKHZ8VvR6uLm4; bm_sz=5585DA73AB1A97EBCEF96A54404031EF~YAAQn2ReaO3nur2GAQAAqgbZvRPb58DswXaOPXWwVKB4fEROKzN3+EkgBTMjrj1ujevWy9McLxBI/bfpaB6Zi8dXfDL4u3WYoWDg47PmMmgXpPsznFpjsQTMtVb768T42y16M3qMnvE4QTB5gaMIepqI5oQn9q5qUFky2BiNulWECFaFMK5E31y2LEysqaXMOP+7kRnJVnSzw8q7H8gzvncCbKxl8AQY5GWGmTxFjUBQ4+MxXX/11Pvv26tl5tbnFJViaSOjDdCwTGGpuasA5ED5eIE2/RCmcPKEFBzkD4lU+6LZGUwXNYpi3wABiw3L3CPe9HHDjXB6cdcHI5Ncm3DzDqBXRdMML6nG08eInJ5bbvdy3TC9ixKTfOWfUUm2+hJzJMilNhgsQGbCqS3D3jO3X3BrD3HJb/KK9Mnu/v8bNE+157yQXFPfA2nv6BNM6BdFvrnM1xpzQ77XD7cfe4HY~3686726~4272706; RequestVerificationToken=77632ac7b3034e5ca659aca465aa9013; _abck=1A042ADF9189B402227285B407781B30~-1~YAAQZQxAF111v72GAQAArBXrvQmEpLLKuZCPfwUhI80+EitIXeYCHtVJFIoqpHZz58JfrMOv5bi60jq+yteXfgbd4F7eHH+gQqr9y95/c0J5SUqJrQWZsOpol17UD+eNH9Xd1SkUXaCme4KkhdjwNdV8kHOqKmMGa3uZ16FRZtJcRLXiS3BhzP24fKOVPbdQkvpEBunHJn21W1I0HAreJOoqjT9/2ZLRgjzTcsYbbu4d/rMgb8CNM7A6BG7HqV6h4QAkhxyYqR8ZK4Jc8XOmX8Let6p2ahGPj6Ld4s4/1+G2Tk8Q0Crn2LhMn2P/jN3cZEIUvZyaUQ5dptq0PjiqJjzU5zAiAp/e24kpAY/BbWcJaUVfnzOK/ElZHcTHCRMubzVN9tVPbm4dL+RGwsQY2yUPHYKfa0Uwg9FFegcXvEbJZyOcau0ep6npWvzg+V5dMZKlPrvx~-1~-1~-1";
-    private readonly static string WizzairRequestVerificationToken = "77632ac7b3034e5ca659aca465aa9013";
-    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 3, 15), new DateTime(2023, 3, 19));
-    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 3, 20), new DateTime(2023, 3, 21));
+    private readonly static string WizzairCookie = "ASP.NET_SessionId=bplo32v54ee3xmw2vogaux3a; bm_sz=5585DA73AB1A97EBCEF96A54404031EF~YAAQn2ReaO3nur2GAQAAqgbZvRPb58DswXaOPXWwVKB4fEROKzN3+EkgBTMjrj1ujevWy9McLxBI/bfpaB6Zi8dXfDL4u3WYoWDg47PmMmgXpPsznFpjsQTMtVb768T42y16M3qMnvE4QTB5gaMIepqI5oQn9q5qUFky2BiNulWECFaFMK5E31y2LEysqaXMOP+7kRnJVnSzw8q7H8gzvncCbKxl8AQY5GWGmTxFjUBQ4+MxXX/11Pvv26tl5tbnFJViaSOjDdCwTGGpuasA5ED5eIE2/RCmcPKEFBzkD4lU+6LZGUwXNYpi3wABiw3L3CPe9HHDjXB6cdcHI5Ncm3DzDqBXRdMML6nG08eInJ5bbvdy3TC9ixKTfOWfUUm2+hJzJMilNhgsQGbCqS3D3jO3X3BrD3HJb/KK9Mnu/v8bNE+157yQXFPfA2nv6BNM6BdFvrnM1xpzQ77XD7cfe4HY~3686726~4272706; ak_bmsc=DD3C9DA205FE3DC4334F87EDDCCFAF74~000000000000000000000000000000~YAAQn2ReaLib/b2GAQAAOog0vhNDIJtjcBK/2eUFoVYp+0A8Jrzf2T9XV+xCsLMsKDKb9lvhH4BOfmulQwf7DP65y0dC9JW3JoTc8Kt3sX5Q95pYUqpRyI+Rt3AXxKAc9bKUqDFQJx2EoTfdUFwK2v9Rcnnd4rRPTODCJl2KJfCxBQtucaXzAidCoguJOQFIRf8Fw4VaneB/xWDJCjZObkKI+DNaDSUTZ7ihtmt8YjJcDyASNVhv1xQgfXL2KpNYl2sBQdEJOwvOzG8p3u3vw8ZcTYCdhzf64wz2nB6bGkrXewlW3/aepBM3Gx2vByE9TJj+0McwAjWEJyWrD8OmS40oG8eRnKsJbqHPuTh6mtxnR5vEzM2UcPfeetD9V+i1jNFmwcly6UOIyT5Dz6P+58q0vvzYCUz1B94xCbHE1uhOeBTp; RequestVerificationToken=4d0bc6fcbf99455f9e45ddbdec8513e1; bm_mi=6E55DA8558030E4D5141E55CBFFD0E48~YAAQn2ReaJwk/72GAQAABz5EvhPd+sTGrapOizHadXRIVFGiGczB4a8OyJonlCX88WaxavGgAk1RWG+M+q+VCfRCzHBzbjbHRJb2XmTe/YwzdaL6V5QDPW+ZSXoCjywnkBR4roE3nFgsfsVj+lGe+guEXIl9K2ea65/ObVffU2WNjTR+DPc9e8r2laHSttU2omrf+j6UliSQvEtxuFQlMEtHW6CYfmhp00g5IcWIld2Mq8ROqDLEFgNJ0ZGARkfwgePrvOFAVVyxxSc7hvKgv8R3PMbf8O2mFy435buyRq0HwriNLucYT8pYJb4=~1; bm_sv=E4B6FBC1AB0655FE41898F49CD642810~YAAQn2ReaFsm/72GAQAA8FdEvhNbjwg3KsKCkekbAZ7a/cO4Tzi9stcrhEN1Y9Xs/f19F0buGxO7EPJ6QrCjRPP3zcNhM9q19GuhgfLv/zqsCPogXdvR4032sKXuZF/YGPwboNqxNdSTVMrE+iMcXTDwWNEbZcSk5ePXJFv9AF5xRGwSUJVpSW1kIvfnXLD7Vb0o7kimC6Bc9mOaiT2t+3RMsp6Mk1MwpbNxUoa1eX+0wsaju6XY0Tm90dob+1UwvGI=~1; _abck=1A042ADF9189B402227285B407781B30~-1~YAAQn2ReaLQm/72GAQAAdGBEvgny+JGV6Kl9qJHk1TokAuFyLWZLxaHihbS2EnC7gw2CBZNETkd+4eTldbHyaoJM/WOuK0uPtYjYTrAONVZNKz9oJLw9xHvdSA00MtbKtPST1eJ4dv5SAvZHTMlrCiXpinUGMePFGwM5TV2N85wb3tQsxddA6ujN5oZRbObsIxZptlDPzpJW0CFjDQtaaefqrBAYCNZRf/pES5NIvuxSWyNLgSmzYpYFWR5wYnRhGIea6VMty8AzcUIUrR3AKCTzFx7qAOO86iY1EHQy4/jo/IQHJZXaE+pwzW4Hdz4ulVAhthaDecwy0TfX6PJ2NY0UTDYFl+ebmU/eA847/3B4at2yXYkAMAmbF52crWRJLLpiO6oaCjN0V8F+YVkr+0ZzcJWQIVFZFR7htlyFavDelixCv1OUEm63W0Y6DMuYup6KMJU2~-1~-1~-1";
+    private readonly static string WizzairRequestVerificationToken = "4d0bc6fcbf99455f9e45ddbdec8513e1";
+    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 3, 08), new DateTime(2023, 4, 01));
+    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 3, 08), new DateTime(2023, 4, 01));
     private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE };
     private readonly static string JsonFileName = "allFlights.json";
-    private readonly static bool IsOfflineMode = true;
+    private readonly static bool IsOfflineMode = false;
 
     public static async Task Main()
     {
@@ -36,11 +36,13 @@ public class Program
 
             Task<IEnumerable<Flight>> ryanairFlightsTask = GetFlightsForAirports(ryanairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
             Task<IEnumerable<Flight>> wizzairFlightsTask = GetFlightsForAirports(wizzairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
-            await Task.WhenAll(ryanairFlightsTask, wizzairFlightsTask);
+
+            using CancellationTokenSource cts =new();
+
+            await TaskUtils.ExecuteTasksUntilFirstException(ryanairFlightsTask, wizzairFlightsTask);
             IEnumerable<Flight> ryanairFlights = await ryanairFlightsTask;
             IEnumerable<Flight> wizzairFlights = await wizzairFlightsTask;
             allFlights = ryanairFlights.Union(wizzairFlights);
-
 
             string jsonString = JsonSerializer.Serialize(allFlights.OrderBy(x => x.PriceInPln));
             await File.WriteAllTextAsync(JsonFileName, jsonString);
