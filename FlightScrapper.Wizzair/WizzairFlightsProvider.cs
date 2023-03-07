@@ -32,6 +32,7 @@ namespace FlightScrapper.Wizzair
             List<Flight> flights = new();
             foreach (var destinationAirportCode in availableDestinationsAirportsCodes)
             {
+                Console.WriteLine($"Wizzair: Processing: {airportCode}->{destinationAirportCode}.");
                 try
                 {
                     IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, cityNameByAirportCodeDict);
@@ -39,7 +40,7 @@ namespace FlightScrapper.Wizzair
                 }
                 catch (HttpRequestException ex)
                 {
-                    Console.WriteLine($"{nameof(WizzairFlightsProvider)}: Connection ignored, because of exception: {airportCode}->{destinationAirportCode}.");
+                    Console.WriteLine($"Wizzair: Connection ignored, because of exception: {airportCode}->{destinationAirportCode}.");
                 }
 
             }

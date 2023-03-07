@@ -21,6 +21,7 @@ namespace FlightScrapper.Ryanair
             List<Flight> flights = new();
             foreach (var destinationAirportCode in availableDestinationsAirportsCodes)
             {
+                Console.WriteLine($"Ryanair: Processing: {airportCode}->{destinationAirportCode}.");
                 IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange);
                 flights.AddRange(fightsForDestination);
             }
