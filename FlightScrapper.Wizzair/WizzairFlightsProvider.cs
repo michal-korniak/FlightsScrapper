@@ -100,14 +100,19 @@ namespace FlightScrapper.Wizzair
 
             var filteredFlights = flights.Where(flight =>
             {
-                if (flight.OriginAirportCode == originAirportCode)
+                if ((flight.OriginAirportCode == originAirportCode && flight.DestinationAirportCode == destinationAirportCode) ||
+                    (flight.OriginAirportCode == destinationAirportCode && flight.DestinationAirportCode == originAirportCode))
                 {
-                    return startDateRange.Includes(flight.Date);
+                    if (flight.OriginAirportCode == originAirportCode)
+                    {
+                        return startDateRange.Includes(flight.Date);
+                    }
+                    else
+                    {
+                        return endDateRange.Includes(flight.Date);
+                    }
                 }
-                else
-                {
-                    return endDateRange.Includes(flight.Date);
-                }
+                return false;
             });
 
             return filteredFlights;
