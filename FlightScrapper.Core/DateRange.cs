@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace FlightScrapper.Core
 {
-
     public class DateRange
     {
         public DateRange(DateTime startDate, DateTime endDate)
@@ -30,5 +29,4 @@ namespace FlightScrapper.Core
             return (StartDate <= value) && (value <= EndDate);
         }
     }
-
 }
