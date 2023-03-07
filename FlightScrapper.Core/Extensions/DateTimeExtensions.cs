@@ -15,7 +15,7 @@ namespace FlightScrapper.Core.Extensions
 
         internal static DateTime GetEearliesTimeOfNexDay(this DateTime dateTime)
         {
-            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day+1);
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day).AddDays(1);
         }
     }
 }
