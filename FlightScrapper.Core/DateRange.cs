@@ -35,14 +35,25 @@ namespace FlightScrapper.Core
 
             TimeSpan timeSpan = TimeSpan.FromDays(daysNumber);
 
-            var currentChunk = this;
-            while ((EndDate - currentChunk.StartDate) > timeSpan)
+            if ((EndDate - StartDate) > timeSpan)
             {
-                currentChunk = new DateRange(currentChunk.EndDate, currentChunk.EndDate + timeSpan);
-                //yield return currentChunk;
-            }
+                DateRange currentChunk = new DateRange(StartDate, StartDate + timeSpan);
+                yield return currentChunk;
+                yield return new DateRange(currentChunk.EndDate, currentChunk.EndDate + timeSpan);
 
-            return null;
+
+                TimeSpan timeLeft = (EndDate - StartDate)-
+
+                while ((EndDate - currentChunk.StartDate) > timeSpan)
+                {
+                    currentChunk = new DateRange(currentChunk.EndDate, currentChunk.EndDate + timeSpan);
+                    //yield return currentChunk;
+                }
+            }
+            else
+            {
+                yield return this;
+            }
         }
     }
 
