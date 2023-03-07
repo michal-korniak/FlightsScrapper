@@ -10,7 +10,7 @@ public class Program
     public static string WizzairRequestVerificationToken = "bc77494ab0ca49d1acb496cd782c2457";
     public static DateRange StartDate = new(new DateTime(2023, 03, 15, 12, 0, 0), new DateTime(2023, 03, 18, 10, 0, 0));
     public static DateRange EndDate = new(new DateTime(2023, 03, 19, 16, 0, 0), new DateTime(2023, 03, 19, 21, 0, 0));
-    public static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW };
+    public static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE };
 
     public static async Task Main()
     {
