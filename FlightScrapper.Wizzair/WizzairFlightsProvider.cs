@@ -8,15 +8,17 @@ namespace FlightScrapper.Wizzair
     public class WizzairFlightsProvider : IFlightsProvider
     {
         private readonly string _wizzairCookie;
+        private string _wizzairRequestVerificationToken;
 
-        public WizzairFlightsProvider(string wizzairCookie)
+        public WizzairFlightsProvider(string wizzairCookie, string wizzairRequestVerificationToken)
         {
             _wizzairCookie = wizzairCookie;
+            _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
         }
 
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
-            WizzairApiClient client = new(_wizzairCookie);
+            WizzairApiClient client = new(_wizzairCookie, _wizzairRequestVerificationToken);
             MapDto mapDto = await client.GetMap();
 
             if (!IsAirportSupported(mapDto, airportCode))
@@ -92,20 +94,25 @@ namespace FlightScrapper.Wizzair
                     cityNameByAirportCodeDict[flight.ArrivalStation],
                     flight.ArrivalStation,
                     flight.DepartureDates.First(),
-                    flight.PriceType == "checkPrice" ? null : flight.Price.Amount, 
+                    flight.PriceType == "checkPrice" ? null : flight.Price.Amount,
                     "Wizzair")
                 );
 
             var filteredFlights = flights.Where(flight =>
             {
-                if (flight.OriginAirportCode == originAirportCode)
+                if ((flight.OriginAirportCode == originAirportCode && flight.DestinationAirportCode == destinationAirportCode) ||
+                    (flight.OriginAirportCode == destinationAirportCode && flight.DestinationAirportCode == originAirportCode))
                 {
-                    return arrivalDateRange.Includes(flight.Date);
+                    if (flight.OriginAirportCode == originAirportCode)
+                    {
+                        return arrivalDateRange.Includes(flight.Date);
+                    }
+                    else
+                    {
+                        return returnDateRange.Includes(flight.Date);
+                    }
                 }
-                else
-                {
-                    return returnDateRange.Includes(flight.Date);
-                }
+                return false;
             });
 
             return filteredFlights;
