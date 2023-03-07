@@ -1,4 +1,5 @@
-﻿using FlightScrapper.Core;
+﻿using FlightScrapper.Core.Contract;
+using FlightScrapper.Core.Models;
 using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;

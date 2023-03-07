@@ -1,4 +1,4 @@
-﻿using FlightScrapper.Core;
+﻿using FlightScrapper.Core.Models;
 using FlightScrapper.Ryanair.Api.RequestModels;
 using System;
 using System.Collections.Generic;

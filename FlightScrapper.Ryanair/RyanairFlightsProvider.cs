@@ -1,4 +1,5 @@
-﻿using FlightScrapper.Core;
+﻿using FlightScrapper.Core.Contract;
+using FlightScrapper.Core.Models;
 using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Ryanair.Api.RequestModels;
 using FlightScrapper.Ryanair.Api.ResponseModels.FlightAvailability;

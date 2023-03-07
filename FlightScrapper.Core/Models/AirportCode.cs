@@ -1,5 +1,4 @@
-﻿
-namespace FlightScrapper.Core
+﻿namespace FlightScrapper.Core.Models
 {
     public enum AirportCode
     {

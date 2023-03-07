@@ -1,4 +1,6 @@
-﻿namespace FlightScrapper.Core
+﻿using FlightScrapper.Core.Models;
+
+namespace FlightScrapper.Core.Contract
 {
     public interface IFlightsProvider
     {

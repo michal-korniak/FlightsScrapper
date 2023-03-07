@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightScrapper.Core
+namespace FlightScrapper.Core.Models
 {
     public class DateRange
     {
@@ -27,7 +27,7 @@ namespace FlightScrapper.Core
 
         public bool Includes(DateTime value)
         {
-            return (StartDate <= value) && (value <= EndDate);
+            return StartDate <= value && value <= EndDate;
         }
 
         public IEnumerable<DateRange> ChunkByDaysNumber(int daysNumber)

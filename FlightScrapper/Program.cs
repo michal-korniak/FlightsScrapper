@@ -1,11 +1,13 @@
 ﻿using System.Text.Json;
 using System.Xml;
-using FlightScrapper.Core;
+using FlightScrapper.Core.Contract;
+using FlightScrapper.Core.Models;
+using FlightScrapper.Core.Services;
 using FlightScrapper.Ryanair;
 using FlightScrapper.Wizzair;
 using FlightScrapper.Wizzair.Api.ResponseModels.Timetable;
 using FlightsScrapper.Workbook;
-using Flight = FlightScrapper.Core.Flight;
+using Flight = FlightScrapper.Core.Models.Flight;
 
 namespace FlightScrapper.App;
 
@@ -44,11 +46,9 @@ public class Program
             await File.WriteAllTextAsync(JsonFileName, jsonString);
         }
 
-        foreach (Flight flight in allFlights)
-        {
-            Console.WriteLine(flight);
-        }
-        ExcelWriter.Write(allFlights);
+        List<Trip> trips = TripsFactory.CreateTrips(AirportsCodes, allFlights).ToList();
+
+        ExcelWriter.Write(allFlights, trips);
     }
 
     private static async Task<IEnumerable<Flight>> GetFlightsForAirports(IFlightsProvider flightsProvider, List<AirportCode> airportsCodes, DateRange arrivalDateRange, DateRange returnDateRange)
