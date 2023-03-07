@@ -9,6 +9,8 @@ namespace FlightScrapper.Ryanair
 {
     public class RyanairFlightsProvider : IFlightsProvider
     {
+       private const int MaxNumberOfDatsToBeRequested = 6;
+
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange startDateRange, DateRange endDateRange)
         {
             ValidateParameters(endDateRange, startDateRange);
@@ -49,6 +51,11 @@ namespace FlightScrapper.Ryanair
 
         private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange startDateRange, DateRange endDateRange)
         {
+            IEnumerable<DateRange> startDateChunks = startDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+            IEnumerable<DateRange> endDateChunks = endDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+
+            
+
             FlightAvailabilityParametersDto flightAvailabilityParameters = new()
             {
                 DateIn = endDateRange.StartDate.ToString("yyyy-MM-dd"),

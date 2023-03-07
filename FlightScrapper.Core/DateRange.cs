@@ -29,6 +29,21 @@ namespace FlightScrapper.Core
         {
             return (StartDate <= value) && (value <= EndDate);
         }
+
+        public IEnumerable<DateRange> ChunkByDaysNumber(int daysNumber)
+        {
+
+            TimeSpan timeSpan = TimeSpan.FromDays(daysNumber);
+
+            var currentChunk = this;
+            while ((EndDate - currentChunk.StartDate) > timeSpan)
+            {
+                currentChunk = new DateRange(currentChunk.EndDate, currentChunk.EndDate + timeSpan);
+                //yield return currentChunk;
+            }
+
+            return null;
+        }
     }
 
 }
