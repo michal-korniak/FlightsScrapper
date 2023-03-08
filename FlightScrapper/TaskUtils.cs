@@ -19,9 +19,7 @@ namespace FlightScrapper.App
                 {
                     throw finished.Exception.InnerException;
                 }
-
-                var index = Array.IndexOf(tasks, finished);
-                tasks = tasks.Where((_, i) => i != index).ToArray();
+                tasks = tasks.Where(task => !task.IsCompleted).ToArray();
             }
 
             await Task.WhenAll(tasks);

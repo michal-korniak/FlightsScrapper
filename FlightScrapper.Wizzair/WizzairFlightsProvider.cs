@@ -4,6 +4,8 @@ using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
 using FlightScrapper.Wizzair.Extensions;
+using FlightScrapper.Wizzair.Models;
+using System.Linq;
 
 namespace FlightScrapper.Wizzair
 {
@@ -28,7 +30,7 @@ namespace FlightScrapper.Wizzair
                 return Enumerable.Empty<Flight>();
             }
 
-            Dictionary<string, string> cityNameByAirportCodeDict = CreateCityNameByAirportCodeDict(mapDto);
+            Dictionary<string, AirportInfo> airportInfoByCodeDict = CreateAirportInfoByCodeDict(mapDto);
             IEnumerable<string> availableDestinationsAirportsCodes = GetAvailableDestinationsAirportsCodes(mapDto, airportCode);
 
             List<Flight> flights = new();
@@ -37,7 +39,7 @@ namespace FlightScrapper.Wizzair
                 Console.WriteLine($"Wizzair: Processing: {airportCode}->{destinationAirportCode}.");
                 try
                 {
-                    IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, cityNameByAirportCodeDict);
+                    IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, airportInfoByCodeDict);
                     flights.AddRange(fightsForDestination);
                 }
                 catch (DetailedHttpRequestException ex)
@@ -58,9 +60,14 @@ namespace FlightScrapper.Wizzair
             return mapDto.Cities.Any(city => city.Iata == airportCode.ToString());
         }
 
-        private Dictionary<string, string> CreateCityNameByAirportCodeDict(MapDto mapDto)
+        private Dictionary<string, AirportInfo> CreateAirportInfoByCodeDict(MapDto mapDto)
         {
-            return mapDto.Cities.ToDictionary(city => city.Iata, city => city.ShortName.Trim());
+            return mapDto.Cities.ToDictionary(city => city.Iata, city => new AirportInfo()
+            {
+                City = city.ShortName,
+                Country = city.CountryName,
+                Code = city.Iata
+            });
         }
 
         private IEnumerable<string> GetAvailableDestinationsAirportsCodes(MapDto mapDto, AirportCode originAirportCode)
@@ -69,7 +76,7 @@ namespace FlightScrapper.Wizzair
         }
 
         private async Task<IEnumerable<Flight>> GetAvailableFlights(WizzairApiClient wizzairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange,
-            Dictionary<string, string> cityNameByAirportCodeDict)
+            Dictionary<string, AirportInfo> airportInfoByCodeDict)
         {
             var timetableRequest = new TimetableRequestDto()
             {
@@ -94,14 +101,18 @@ namespace FlightScrapper.Wizzair
             };
             var timetable = await wizzairApiClient.GetTimetable(timetableRequest);
             var flights = timetable.OutboundFlights.Union(timetable.ReturnFlights).Select(flight
-                => new Flight(
-                    cityNameByAirportCodeDict[flight.DepartureStation],
-                    flight.DepartureStation,
-                    cityNameByAirportCodeDict[flight.ArrivalStation],
-                    flight.ArrivalStation,
-                    flight.DepartureDates.First(),
-                    flight.PriceType == "checkPrice" ? null : flight.Price.Amount,
-                    "Wizzair")
+                => new Flight()
+                    {
+                        AirlineName = "Wizzair",
+                        OriginCountry = airportInfoByCodeDict[flight.DepartureStation].Country,
+                        OriginCity = airportInfoByCodeDict[flight.DepartureStation].City,
+                        OriginAirportCode = flight.DepartureStation,
+                        DestinationCountry = airportInfoByCodeDict[flight.ArrivalStation].Country,
+                        DestinationCity = airportInfoByCodeDict[flight.ArrivalStation].City,
+                        DestinationAirportCode = flight.ArrivalStation,
+                        Date = flight.DepartureDates.First(),
+                        PriceInPln = flight.PriceType=="checkPrice" ? null : flight.Price.Amount
+                    }
                 );
 
             var filteredFlights = flights.Where(flight =>

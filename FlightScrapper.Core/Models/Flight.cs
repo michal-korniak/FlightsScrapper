@@ -2,24 +2,14 @@
 {
     public class Flight
     {
-        public string OriginCity { get; private set; }
-        public string OriginAirportCode { get; private set; }
-        public string DestinationCity { get; private set; }
-        public string DestinationAirportCode { get; private set; }
-        public DateTime Date { get; private set; }
-        public decimal? PriceInPln { get; private set; }
-        public string AirlineName { get; private set; }
-
-        public Flight(string originCity, string originAirportCode, string destinationCity,
-            string destinationAirportCode, DateTime date, decimal? priceInPln, string airlineName)
-        {
-            OriginCity = originCity;
-            OriginAirportCode = originAirportCode;
-            DestinationCity = destinationCity;
-            DestinationAirportCode = destinationAirportCode;
-            Date = date;
-            PriceInPln = priceInPln;
-            AirlineName = airlineName;
-        }
+        public string OriginCountry { get; init; }
+        public string OriginCity { get; init; }
+        public string OriginAirportCode { get; init; }
+        public string DestinationCountry { get; init; }
+        public string DestinationCity { get; init; }
+        public string DestinationAirportCode { get; init; }
+        public DateTime Date { get; init; }
+        public decimal? PriceInPln { get; init; }
+        public string AirlineName { get; init; }
     }
 }

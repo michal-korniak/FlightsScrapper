@@ -32,5 +32,13 @@ namespace FlightScrapper.Ryanair.Api
             var response = await _httpClient.GetFromJsonAsync<IEnumerable<RouteDto>>(url);
             return response;
         }
+
+        public async Task<IEnumerable<AirportDto>> GetAirports()
+        {
+            var url = $"https://www.ryanair.com/api/views/locate/5/airports/pl/active";
+
+            var response = await _httpClient.GetFromJsonAsync<IEnumerable<AirportDto>>(url);
+            return response;
+        }
     }
 }

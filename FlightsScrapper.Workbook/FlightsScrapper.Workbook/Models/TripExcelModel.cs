@@ -10,7 +10,9 @@ namespace FlightsScrapper.Workbook.Models
 {
     public class TripExcelModel
     {
+        public string OriginCountry { get; }
         public string OriginCity { get; }
+        public string DestinationCountry { get; }
         public string DestinationCity { get; }
 
         [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
@@ -38,7 +40,9 @@ namespace FlightsScrapper.Workbook.Models
 
         public TripExcelModel(Trip trip)
         {
+            OriginCountry = trip.ArrivalFlight.OriginCountry;
             OriginCity = trip.ArrivalFlight.OriginCity;
+            DestinationCountry = trip.ReturnFlight.OriginCountry;
             DestinationCity = trip.ArrivalFlight.DestinationCity;
             ArrivalFlightDate = trip.ArrivalFlight.Date;
             ArrivalFlightDayOfWeek = trip.ArrivalFlight.Date.DayOfWeek;

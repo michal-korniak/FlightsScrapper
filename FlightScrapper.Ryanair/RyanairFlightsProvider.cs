@@ -5,8 +5,7 @@ using FlightScrapper.Ryanair.Api.RequestModels;
 using FlightScrapper.Ryanair.Api.ResponseModels.FlightAvailability;
 using FlightScrapper.Ryanair.Api.ResponseModels.Routes;
 using FlightScrapper.Ryanair.Factories;
-using System.Net.Http.Json;
-using System.Security.Cryptography;
+using FlightScrapper.Ryanair.Models;
 
 namespace FlightScrapper.Ryanair
 {
@@ -18,16 +17,28 @@ namespace FlightScrapper.Ryanair
         {
             RyanairApiClient client = new();
 
+            Dictionary<string, AirportInfo> airportInfoByCodeDict = await CreateAirportInfoByCodeDict(client);
             IEnumerable<string> availableDestinationsAirportsCodes = await GetAvailableDestinationsAirportsCodes(client, airportCode);
             List<Flight> flights = new();
             foreach (var destinationAirportCode in availableDestinationsAirportsCodes)
             {
                 Console.WriteLine($"Ryanair: Processing: {airportCode}->{destinationAirportCode}.");
-                IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange);
+                IEnumerable<Flight> fightsForDestination = await GetAvailableFlights(client, airportCode.ToString(), destinationAirportCode, arrivalDateRange, returnDateRange, airportInfoByCodeDict);
                 flights.AddRange(fightsForDestination);
             }
 
             return flights;
+        }
+
+        private async Task<Dictionary<string, AirportInfo>> CreateAirportInfoByCodeDict(RyanairApiClient client)
+        {
+            IEnumerable<AirportDto> airports = await client.GetAirports();
+            return airports.ToDictionary(airport => airport.Code, airport => new AirportInfo()
+            {
+                City = airport.City.Name,
+                Code = airport.Code,
+                Country = airport.Country.Name,
+            });
         }
 
         private async Task<IEnumerable<string>> GetAvailableDestinationsAirportsCodes(RyanairApiClient ryanairApiClient, AirportCode originAirportCode)
@@ -36,7 +47,7 @@ namespace FlightScrapper.Ryanair
             return routes.Select(x => x.ArrivalAirport.Code);
         }
 
-        private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange)
+        private async Task<IEnumerable<Flight>> GetAvailableFlights(RyanairApiClient ryanairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange, Dictionary<string, AirportInfo> airportInfoByCodeDict)
         {
             IEnumerable<DateRange> arrivalDateChunks = arrivalDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
             IEnumerable<DateRange> returnDateChunks = returnDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
@@ -73,14 +84,19 @@ namespace FlightScrapper.Ryanair
                 => flightAvailability.Trips.SelectMany(trip
                 => trip.Dates.SelectMany(date
                 => date.Flights.Where(flight => flight.RegularFare != null).Select(flight
-                => new Flight(trip.OriginName,
-                    trip.Origin,
-                    trip.DestinationName,
-                    trip.Destination,
-                    flight.Time.First(),
-                    flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value,
-                    "Ryanair"))))
-                );
+                => new Flight()
+                {
+                    AirlineName = "Ryanair",
+                    Date = flight.Time.First(),
+                    OriginAirportCode = trip.Origin,
+                    OriginCity = airportInfoByCodeDict[trip.Origin].City,
+                    OriginCountry = airportInfoByCodeDict[trip.Origin].Country,
+                    DestinationAirportCode = trip.Destination,
+                    DestinationCity = airportInfoByCodeDict[trip.Destination].City,
+                    DestinationCountry = airportInfoByCodeDict[trip.Destination].Country,
+                    PriceInPln = flight.RegularFare.Fares.SingleOrDefault(fare => fare.Type == "ADT").Amount.Value
+                }
+                ))));
 
             var filteredFlights = flights.Where(flight =>
             {
