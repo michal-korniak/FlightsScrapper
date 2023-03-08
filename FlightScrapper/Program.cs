@@ -17,7 +17,8 @@ public class Program
     private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 3, 10), new DateTime(2023, 5, 1));
     private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE };
     private readonly static string JsonFileName = "allFlights.json";
-    private readonly static bool IsOfflineMode = false;
+    private readonly static bool IsOfflineMode = true;
+    private readonly static int MaxTripLenghtInDays = 5;
 
     public static async Task Main()
     {
@@ -35,7 +36,7 @@ public class Program
             Task<IEnumerable<Flight>> ryanairFlightsTask = GetFlightsForAirports(ryanairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
             Task<IEnumerable<Flight>> wizzairFlightsTask = GetFlightsForAirports(wizzairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
 
-            using CancellationTokenSource cts =new();
+            using CancellationTokenSource cts = new();
 
             await TaskUtils.ExecuteTasksUntilFirstException(ryanairFlightsTask, wizzairFlightsTask);
             IEnumerable<Flight> ryanairFlights = await ryanairFlightsTask;
@@ -46,7 +47,7 @@ public class Program
             await File.WriteAllTextAsync(JsonFileName, jsonString);
         }
 
-        List<Trip> trips = TripsFactory.CreateTrips(AirportsCodes, allFlights).ToList();
+        IEnumerable<Trip> trips = TripsFactory.CreateTrips(AirportsCodes, allFlights, MaxTripLenghtInDays);
         ExcelWriter.Write(allFlights, trips);
     }
 
