@@ -16,8 +16,8 @@ namespace FlightsScrapper.Workbook.Models
         public DateTime Date { get; }
 
 
-        [EpplusTableColumn(NumberFormat = "###0.00 PLN")]
-        public decimal? PriceInPln { get; }
+        [EpplusTableColumn(NumberFormat = "#####0.00 zł")]
+        public decimal? Price { get; }
 
         public string AirlineName { get; }
 
@@ -30,7 +30,7 @@ namespace FlightsScrapper.Workbook.Models
             DestinationAirportCode = flight.DestinationAirportCode;
             DestinationCountry = flight.DestinationCountry;
             Date = flight.Date;
-            PriceInPln = flight.PriceInPln;
+            Price = flight.PriceInPln;
             AirlineName = flight.AirlineName;
         }
     }
