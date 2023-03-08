@@ -2,6 +2,8 @@
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
 using FlightScrapper.Wizzair.Api.ResponseModels.Timetable;
 using FlightScrapper.Wizzair.Extensions;
+using Polly.Retry;
+using Polly;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -14,14 +16,16 @@ namespace FlightScrapper.Ryanair.Api
         private readonly HttpClient _httpClient;
         private readonly string _wizzairCookie;
         private string _wizzairRequestVerificationToken;
+        private readonly AsyncRetryPolicy _retryPolicy;
 
         public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken)
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(30);
+            _httpClient.Timeout = TimeSpan.FromSeconds(15);
 
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
+            _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(2);
         }
 
         public async Task<MapDto> GetMap()
@@ -31,7 +35,7 @@ namespace FlightScrapper.Ryanair.Api
             request.Headers.Add("accept", "application/json, text/plain, */*");
             request.Headers.Add("cookie", _wizzairCookie);
 
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
             return await response.Content.ReadFromJsonAsync<MapDto>();
         }
@@ -49,7 +53,7 @@ namespace FlightScrapper.Ryanair.Api
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
 
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
             var responseBody = await response.Content.ReadFromJsonAsync<TimetableDto>();
             return responseBody;
