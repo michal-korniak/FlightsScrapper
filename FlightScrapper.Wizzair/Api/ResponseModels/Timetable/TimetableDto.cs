@@ -9,7 +9,7 @@ namespace FlightScrapper.Wizzair.Api.ResponseModels.Timetable
 
     public class TimetableDto
     {
-        public List<Flight> OutboundFlights { get; set; }
-        public List<Flight> ReturnFlights { get; set; }
+        public List<FlightDto> OutboundFlights { get; set; }
+        public List<FlightDto> ReturnFlights { get; set; }
     }
 }

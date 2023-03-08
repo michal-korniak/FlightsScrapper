@@ -3,9 +3,10 @@ using FlightScrapper.Core.Models;
 using FlightScrapper.Ryanair.Api;
 using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
+using FlightScrapper.Wizzair.Api.ResponseModels.Timetable;
 using FlightScrapper.Wizzair.Extensions;
+using FlightScrapper.Wizzair.Factories;
 using FlightScrapper.Wizzair.Models;
-using System.Linq;
 
 namespace FlightScrapper.Wizzair
 {
@@ -13,6 +14,7 @@ namespace FlightScrapper.Wizzair
     {
         private readonly string _wizzairCookie;
         private string _wizzairRequestVerificationToken;
+        private const int MaxNumberOfDatsToBeRequested = 30;
 
         public WizzairFlightsProvider(string wizzairCookie, string wizzairRequestVerificationToken)
         {
@@ -78,29 +80,36 @@ namespace FlightScrapper.Wizzair
         private async Task<IEnumerable<Flight>> GetAvailableFlights(WizzairApiClient wizzairApiClient, string originAirportCode, string destinationAirportCode, DateRange arrivalDateRange, DateRange returnDateRange,
             Dictionary<string, AirportInfo> airportInfoByCodeDict)
         {
-            var timetableRequest = new TimetableRequestDto()
+            IEnumerable<DateRange> arrivalDateChunks = arrivalDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+            IEnumerable<DateRange> returnDateChunks = returnDateRange.ChunkByDaysNumber(MaxNumberOfDatsToBeRequested);
+            int leftArrivalDateChunks = arrivalDateChunks.Count();
+            int leftReturnDateChunks = returnDateChunks.Count();
+
+            List<TimetableDto> timetables = new();
+            while (leftArrivalDateChunks > 0 || leftReturnDateChunks > 0)
             {
-                PriceType = "regular",
-                AdultCount = 1,
-                FlightList = new List<FlightRequestDto>() {
-                    new FlightRequestDto()
-                    {
-                        DepartureStation=originAirportCode,
-                        ArrivalStation=destinationAirportCode,
-                        From=arrivalDateRange.StartDate.ToString("yyyy-MM-dd"),
-                        To=arrivalDateRange.EndDate.ToString("yyyy-MM-dd")
-                    },
-                    new FlightRequestDto()
-                    {
-                        DepartureStation=destinationAirportCode,
-                        ArrivalStation=originAirportCode,
-                        From=returnDateRange.StartDate.ToString("yyyy-MM-dd"),
-                        To=returnDateRange.EndDate.ToString("yyyy-MM-dd")
-                    }
+                TimetableRequestDto timetableRequest = null;
+                if (leftArrivalDateChunks > 0 && leftReturnDateChunks > 0)
+                {
+                    var arrivalDateRangeForChunk = arrivalDateChunks.ElementAt(--leftArrivalDateChunks);
+                    var returnDateRangeForChunk = returnDateChunks.ElementAt(--leftReturnDateChunks);
+                    timetableRequest = TimetableRequestDtoFactory.TwoWayFlight(originAirportCode, destinationAirportCode, arrivalDateRangeForChunk, returnDateRangeForChunk);
                 }
-            };
-            var timetable = await wizzairApiClient.GetTimetable(timetableRequest);
-            var flights = timetable.OutboundFlights.Union(timetable.ReturnFlights).Select(flight
+                else if (leftArrivalDateChunks > 0)
+                {
+                    var arrivalDateRangeForChunk = arrivalDateChunks.ElementAt(--leftArrivalDateChunks);
+                    timetableRequest = TimetableRequestDtoFactory.OneWayFlight(originAirportCode, destinationAirportCode, arrivalDateRangeForChunk);
+                }
+                else if (leftReturnDateChunks > 0)
+                {
+                    var returnDateRangeForChunk = returnDateChunks.ElementAt(--leftReturnDateChunks);
+                    timetableRequest = TimetableRequestDtoFactory.OneWayFlight(destinationAirportCode, originAirportCode, returnDateRangeForChunk);
+                }
+                TimetableDto timetable = await wizzairApiClient.GetTimetable(timetableRequest);
+                timetables.Add(timetable);
+            }
+
+            var flights = timetables.SelectMany(timetable=>timetable.OutboundFlights.Union(timetable.ReturnFlights).Select(flight
                 => new Flight()
                     {
                         AirlineName = "Wizzair",
@@ -113,7 +122,7 @@ namespace FlightScrapper.Wizzair
                         Date = flight.DepartureDates.First(),
                         PriceInPln = flight.PriceType=="checkPrice" ? null : flight.Price.Amount
                     }
-                );
+                ));
 
             var filteredFlights = flights.Where(flight =>
             {
