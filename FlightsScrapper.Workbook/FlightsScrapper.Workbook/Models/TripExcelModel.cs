@@ -17,10 +17,12 @@ namespace FlightsScrapper.Workbook.Models
 
         [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
         public DateTime ArrivalFlightDate { get; }
+        public int ArrivalFlightHour { get; }
         public DayOfWeek ArrivalFlightDayOfWeek { get; }
 
         [EpplusTableColumn(NumberFormat = "yyyy-MM-dd hh:mm")]
         public DateTime ReturnFlightDate { get; }
+        public int ReturnFlightHour { get; }
         public DayOfWeek ReturnFlightDayOfWeek { get; }
 
         [EpplusTableColumn(NumberFormat = "#####0.00 zł")]
@@ -45,8 +47,10 @@ namespace FlightsScrapper.Workbook.Models
             DestinationCountry = trip.ReturnFlight.OriginCountry;
             DestinationCity = trip.ArrivalFlight.DestinationCity;
             ArrivalFlightDate = trip.ArrivalFlight.Date;
+            ArrivalFlightHour = trip.ArrivalFlight.Date.Hour;
             ArrivalFlightDayOfWeek = trip.ArrivalFlight.Date.DayOfWeek;
             ReturnFlightDate = trip.ReturnFlight.Date;
+            ReturnFlightHour = trip.ReturnFlight.Date.Hour;
             ReturnFlightDayOfWeek = trip.ReturnFlight.Date.DayOfWeek;
             ArrivalFlightPrice = trip.ArrivalFlight.PriceInPln;
             ReturnFlightPrice = trip.ReturnFlight.PriceInPln;

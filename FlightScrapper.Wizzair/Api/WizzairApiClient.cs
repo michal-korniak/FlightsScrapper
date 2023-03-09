@@ -30,7 +30,7 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<MapDto> GetMap()
         {
-            string url = "https://be.wizzair.com/16.1.0/Api/asset/map?languageCode=pl-pl";
+            string url = "https://be.wizzair.com/16.2.0/Api/asset/map?languageCode=pl-pl";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("accept", "application/json, text/plain, */*");
             request.Headers.Add("cookie", _wizzairCookie);
@@ -42,7 +42,7 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
-            string url = "https://be.wizzair.com/16.1.0/Api/search/timetable";
+            string url = "https://be.wizzair.com/16.2.0/Api/search/timetable";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
 
             request.Headers.Add("accept", "application/json, text/plain, */*");
