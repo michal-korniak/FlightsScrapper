@@ -16,21 +16,23 @@ namespace FlightScrapper.Ryanair.Api
         private readonly HttpClient _httpClient;
         private readonly string _wizzairCookie;
         private string _wizzairRequestVerificationToken;
+        private readonly string _wizzairApiVersion;
         private readonly AsyncRetryPolicy _retryPolicy;
 
-        public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken)
+        public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken, string wizzairApiVersion)
         {
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(15);
 
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
+            _wizzairApiVersion = wizzairApiVersion;
             _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(2);
         }
 
         public async Task<MapDto> GetMap()
         {
-            string url = "https://be.wizzair.com/16.2.0/Api/asset/map?languageCode=pl-pl";
+            string url = $"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("accept", "application/json, text/plain, */*");
             request.Headers.Add("cookie", _wizzairCookie);
@@ -42,7 +44,7 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
-            string url = "https://be.wizzair.com/16.2.0/Api/search/timetable";
+            string url = $"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
 
             request.Headers.Add("accept", "application/json, text/plain, */*");

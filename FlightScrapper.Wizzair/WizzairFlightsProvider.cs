@@ -14,17 +14,20 @@ namespace FlightScrapper.Wizzair
     {
         private readonly string _wizzairCookie;
         private string _wizzairRequestVerificationToken;
+        private readonly string _wizzairApiVersion;
+
         private const int MaxNumberOfDatsToBeRequested = 30;
 
-        public WizzairFlightsProvider(string wizzairCookie, string wizzairRequestVerificationToken)
+        public WizzairFlightsProvider(string wizzairCookie, string wizzairRequestVerificationToken, string wizzairApiVersion)
         {
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
+            _wizzairApiVersion = wizzairApiVersion;
         }
 
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
-            WizzairApiClient client = new(_wizzairCookie, _wizzairRequestVerificationToken);
+            WizzairApiClient client = new(_wizzairCookie, _wizzairRequestVerificationToken, _wizzairApiVersion);
             MapDto mapDto = await client.GetMap();
 
             if (!IsAirportSupported(mapDto, airportCode))
