@@ -27,7 +27,7 @@ namespace FlightScrapper.Ryanair.Api
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
             _wizzairApiVersion = wizzairApiVersion;
-            _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(2);
+            _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(3);
         }
 
         public async Task<MapDto> GetMap()

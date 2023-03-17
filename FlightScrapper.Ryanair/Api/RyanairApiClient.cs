@@ -17,7 +17,7 @@ namespace FlightScrapper.Ryanair.Api
         {
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(15);
-            _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(2);
+            _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(3);
         }
 
         public async Task<FlightAvailabilityDto> GetFlightAvailability(FlightAvailabilityParametersDto parameters)
