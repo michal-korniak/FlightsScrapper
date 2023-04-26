@@ -16,7 +16,7 @@ namespace FlightScrapper.Ryanair.Api
         public RyanairApiClient()
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(15);
+            _httpClient.Timeout = TimeSpan.FromSeconds(30);
             _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(3);
         }
 

@@ -22,20 +22,22 @@ namespace FlightScrapper.Ryanair.Api
         public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken, string wizzairApiVersion)
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(15);
+            _httpClient.Timeout = TimeSpan.FromSeconds(30);
 
             _wizzairCookie = wizzairCookie;
             _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
             _wizzairApiVersion = wizzairApiVersion;
-            _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(3, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
+            _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(5, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
         }
 
         public async Task<MapDto> GetMap()
         {
             string url = $"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("accept", "application/json, text/plain, */*");
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "PostmanRuntime/7.32.2");
             request.Headers.Add("cookie", _wizzairCookie);
+            request.Headers.Add("x-requestverificationtoken", _wizzairRequestVerificationToken);
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -48,6 +50,7 @@ namespace FlightScrapper.Ryanair.Api
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
 
             request.Headers.Add("accept", "application/json, text/plain, */*");
+            request.Headers.Add("User-Agent", "PostmanRuntime/7.32.2");
             request.Headers.Add("cookie", _wizzairCookie);
             request.Headers.Add("origin", "https://wizzair.com");
             request.Headers.Add("x-requestverificationtoken", _wizzairRequestVerificationToken);
