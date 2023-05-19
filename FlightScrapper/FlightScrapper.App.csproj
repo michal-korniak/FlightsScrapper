@@ -13,4 +13,17 @@
     <ProjectReference Include="..\FlightsScrapper.Workbook\FlightsScrapper.Workbook\FlightsScrapper.Workbook.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="RequestTemplates\Ryanair.req">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="RequestTemplates\Wizzair.req">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

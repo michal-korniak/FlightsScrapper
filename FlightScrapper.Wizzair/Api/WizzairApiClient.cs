@@ -1,43 +1,36 @@
 ﻿using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
 using FlightScrapper.Wizzair.Api.ResponseModels.Timetable;
-using FlightScrapper.Wizzair.Extensions;
 using Polly.Retry;
 using Polly;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using FlightScrapper.Core.Extensions;
 
-namespace FlightScrapper.Ryanair.Api
+namespace FlightScrapper.Wizzair.Api
 {
     internal class WizzairApiClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _wizzairCookie;
-        private string _wizzairRequestVerificationToken;
-        private readonly string _wizzairApiVersion;
         private readonly AsyncRetryPolicy _retryPolicy;
+        private readonly HttpRequestMessage _requestTemplate;
+        private string _wizzairApiVersion => _requestTemplate.RequestUri.OriginalString.Split('/')[1];
 
-        public WizzairApiClient(string wizzairCookie, string wizzairRequestVerificationToken, string wizzairApiVersion)
+        public WizzairApiClient(HttpRequestMessage requestTemplate)
         {
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
-
-            _wizzairCookie = wizzairCookie;
-            _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
-            _wizzairApiVersion = wizzairApiVersion;
             _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(5, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
+            _requestTemplate = requestTemplate;
         }
 
         public async Task<MapDto> GetMap()
         {
-            string url = $"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("Accept", "*/*");
-            request.Headers.Add("User-Agent", "PostmanRuntime/7.32.2");
-            request.Headers.Add("cookie", _wizzairCookie);
-            request.Headers.Add("x-requestverificationtoken", _wizzairRequestVerificationToken);
+            var request = _requestTemplate.Clone();
+            request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl");
+            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -46,17 +39,12 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
-            string url = $"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
-
-            request.Headers.Add("accept", "application/json, text/plain, */*");
-            request.Headers.Add("User-Agent", "PostmanRuntime/7.32.2");
-            request.Headers.Add("cookie", _wizzairCookie);
-            request.Headers.Add("origin", "https://wizzair.com");
-            request.Headers.Add("x-requestverificationtoken", _wizzairRequestVerificationToken);
-
+            var request = _requestTemplate.Clone();
+            request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable");
+            request.Method = HttpMethod.Post;
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
+            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();

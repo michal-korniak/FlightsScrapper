@@ -1,0 +1,18 @@
+﻿GET /17.3.0/Api/asset/map?languageCode=pl-pl HTTP/1.1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,pl;q=0.7
+Connection: keep-alive
+Cookie: bm_sz=10085B0DC6CDB921892A9653B8FF55DD~YAAQjmReaCD0ZAmIAQAALcfPMhPjothak4Blrdob4VU3kFUrg6bfvvXgU7EKi2YVER22tgF7rMm1Pjz4qvWQynFvrSkoJsn/zqFVT6evw85/ZGq6lIi9tyrqsRdD9733U/1FiDdI9yQ40LTiB4Ijp4SxpTc9zXwNk2Y8OHs0Lutwn56DcyIyrchkq1Jfx1juYBoCihtX4CYghGC98eyT+YTEPBcnsiNRSjBcRX2ZiV940/mPsb4l+24/X4lYenIXyuAq7eRumuaktcdHkGSyqcXgqzo3Wj4DE1jtu6np3zyGkREaNqcaUo2a1+d8K5cXZ8AeeUqYWSQ4duiz7Hl+NtR18BTfSHsILt/ACR4cUKy2NL/ILhuJxM9HyNLQ+X/w2l7PYfEJK8z9b5qZ/7QARtVClg==~3553590~4470580; bm_mi=D956E69B13757E1129BDE1206866F6B2~YAAQL2ReaJ+QRweIAQAABB/tMhNw1d1/+pH3TjR9sjMCWiRtUPrwc2fDhnyRXrpLPuoswtv+Y8M+DpxRIPwiKt3QjF32LYpyJlQ3/pXq3ytY1yfU3aGxFwD3fD0dIRSF7QLrwjUSnVhg66SU/rYHM2oP2Cklt7AYyxSL029nc7wvEEm9OtH7s8BQXWLmDrON7DEMHmnJfUxlx06hrSfBc8JVifDp3RPqnzkIJu6GNVVIuz91DRHpmWWFdpmWH7Xul4tW73Uq6vIpdE9lFDDUtfo+zPaKPlkpoTuU5n6kP2qoz6JjzywVO+V5QzJEWyZNga8Bn6I=~1; bm_sv=0EFFE99FB679D1F6E673D8ED4F719F4C~YAAQL2ReaLuRRweIAQAAclTtMhPZnsCcfpLPZsFwO4/8k5x3y1zgtoz/wX2xmzM2H1Q7bsGX0AV7AuezsfFK0QdWP+wBGP3RD7jFZJRmOab6fz8yYdbRdTPn4XQkFCC8poR+8YpE1rDU9m0FH5JxMMArWl8W3vooBHKv3IoCe4OAONwLxmmnVeeB2CyVUTBUfQBMp/X2vcV+nynbsBg/gDDm9TpxUP9SC9G5PKkjrP8vPZRYoKnzsRG5GM5V1d5HoKg=~1; ak_bmsc=E9D22F0B99962C5415F79D71CF70CF7F~000000000000000000000000000000~YAAQL2ReaPeRRweIAQAAC17tMhNfCK9swgk1CltCrIy8YaxSUDHGuE4gpjnfBZWi+wuVXRWPSCn8I45B6bXq9yIIGMF88Re0YmS1yI0jpoLpYrbgN3prCZykUgGOmj1iMiWXOnLqta2P7VrELiNQD2b04/0V7lpmh2lplu+JdPRPHjxWgEmSjEycXIRooauIsGgI+SXYzDXhCOqO+e2wNxv3Ib17Ww2sMXHfXWHC3BnYMMt4Mq3PhMaKws79gKNtZ/IxDqzVGWnjDWkwlRPsi0TZJ3B+53zyBS5KHiKyWmm6oRwRHo/pRK9KbK2Hvr3RKcOilrumoc4+gcWzqoganjiv5yQ5nKYE/83l/kGCRfvS3IM4c6WVVyCWT70jJPt/zIFYUujrY7MiEx6JoTdNgaH6AH3QfCnKPA==; ASP.NET_SessionId=gwmg4q2vo1zv50faxgmossyh; RequestVerificationToken=b5bf6ec54bb04f5f895125412780f227; _abck=944042F0FAD3E97178C799F8A4FB7ABE~-1~YAAQL2ReaKqSRweIAQAADH3tMgmRElAYc16M0qL1l/GdbU0hTswhYQb4IXRHCh+hxyo+z6a8GcKlaNQcfBrI1BaihQ+lVD2CvWRV+tyoJ0ndgMHG/YooYfwfOBAPHp3VcfdLWXNwCsLXefOgKhiF6iiGuOBbyGFA/Bo7pKHX9IMTIrEePihp7AkJ3YisOyH5+mAGe01NTn5krsMn8fY1XBnG/EisM4AjMeJHQRUzkjHV47TRjADYACCHf3NiHhKc6IPfexDk4Kerl8Wrq5T1mACqQS7P3l/3udJ77PzMMhD95lN5be3uyVxQ5fUALFk6D7Qu0F6UbjYSb5+SxjRyhCnX7Cln/ND3qAotgzFKKEWTZ40sjnUxRDvg/4Cv/lj7NQDOitVAZS8Zxx+14t35u6fmZWhHf8KEhwdk0tthcL7JHZntr0/EDdcoBmCE5QSosWB7F78koDuvdNgn1g==~-1~-1~-1
+Host: be.wizzair.com
+Origin: https://wizzair.com
+Referer: https://wizzair.com/pl-pl
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
+X-RequestVerificationToken: b5bf6ec54bb04f5f895125412780f227
+sec-ch-ua: "Google Chrome";v="113", "Chromium";v="113", "Not-A.Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+sentry-trace: d4286356ba084de5821f61433e23

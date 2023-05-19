@@ -1,4 +1,5 @@
-﻿using FlightScrapper.Ryanair.Api.RequestModels;
+﻿using FlightScrapper.Core.Extensions;
+using FlightScrapper.Ryanair.Api.RequestModels;
 using FlightScrapper.Ryanair.Api.ResponseModels.FlightAvailability;
 using FlightScrapper.Ryanair.Api.ResponseModels.Routes;
 using FlightScrapper.Ryanair.Utils;
@@ -12,9 +13,11 @@ namespace FlightScrapper.Ryanair.Api
     {
         private readonly HttpClient _httpClient;
         private readonly AsyncRetryPolicy _retryPolicy;
+        private HttpRequestMessage _requestTemplate;
 
-        public RyanairApiClient()
+        public RyanairApiClient(HttpRequestMessage requestTemplate)
         {
+            _requestTemplate = requestTemplate;
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
             _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(3);
@@ -22,27 +25,38 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<FlightAvailabilityDto> GetFlightAvailability(FlightAvailabilityParametersDto parameters)
         {
-            var queryString = HttpUtils.ToQueryString(parameters);
-            var url = $"https://www.ryanair.com/api/booking/v4/pl-pl/availability{queryString}";
+            var request = _requestTemplate.Clone();
+            request.RequestUri = new Uri($"https://www.ryanair.com/api/booking/v4/pl-pl/availability{HttpUtils.ToQueryString(parameters)}");
+            request.Method = HttpMethod.Get;
+            request.Headers.Remove("Accept-Encoding");
 
-            var response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.GetFromJsonAsync<FlightAvailabilityDto>(url));
-            return response;
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
+            await response.EnsureSuccess();
+            return await response.Content.ReadFromJsonAsync<FlightAvailabilityDto>();
         }
 
         public async Task<IEnumerable<RouteDto>> GetRoutes(string originAirportCode)
         {
-            var url = $"https://www.ryanair.com/api/views/locate/searchWidget/routes/pl/airport/{originAirportCode}";
+            var request = _requestTemplate.Clone();
+            request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/searchWidget/routes/pl/airport/{originAirportCode}");
+            request.Method = HttpMethod.Get;
+            request.Headers.Remove("Accept-Encoding");
 
-            var response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.GetFromJsonAsync<IEnumerable<RouteDto>>(url));
-            return response;
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
+            await response.EnsureSuccess();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<RouteDto>>();
         }
 
         public async Task<IEnumerable<AirportDto>> GetAirports()
         {
-            var url = $"https://www.ryanair.com/api/views/locate/5/airports/pl/active";
+            var request = _requestTemplate.Clone();
+            request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/5/airports/pl/active");
+            request.Method = HttpMethod.Get;
+            request.Headers.Remove("Accept-Encoding");
 
-            var response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.GetFromJsonAsync<IEnumerable<AirportDto>>(url));
-            return response;
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
+            await response.EnsureSuccess();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<AirportDto>>();
         }
     }
 }

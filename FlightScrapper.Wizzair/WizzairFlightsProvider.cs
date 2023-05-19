@@ -1,10 +1,10 @@
 ﻿using FlightScrapper.Core.Contract;
+using FlightScrapper.Core.Extensions;
 using FlightScrapper.Core.Models;
-using FlightScrapper.Ryanair.Api;
+using FlightScrapper.Wizzair.Api;
 using FlightScrapper.Wizzair.Api.RequestModels.Timetable;
 using FlightScrapper.Wizzair.Api.ResponseModels.Map;
 using FlightScrapper.Wizzair.Api.ResponseModels.Timetable;
-using FlightScrapper.Wizzair.Extensions;
 using FlightScrapper.Wizzair.Factories;
 using FlightScrapper.Wizzair.Models;
 
@@ -12,22 +12,17 @@ namespace FlightScrapper.Wizzair
 {
     public class WizzairFlightsProvider : IFlightsProvider
     {
-        private readonly string _wizzairCookie;
-        private string _wizzairRequestVerificationToken;
-        private readonly string _wizzairApiVersion;
-
         private const int MaxNumberOfDatsToBeRequested = 30;
+        private readonly HttpRequestMessage _requestTemplate;
 
-        public WizzairFlightsProvider(string wizzairCookie, string wizzairRequestVerificationToken, string wizzairApiVersion)
+        public WizzairFlightsProvider(HttpRequestMessage requestTemplate)
         {
-            _wizzairCookie = wizzairCookie;
-            _wizzairRequestVerificationToken = wizzairRequestVerificationToken;
-            _wizzairApiVersion = wizzairApiVersion;
+            _requestTemplate = requestTemplate;
         }
 
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
-            WizzairApiClient client = new(_wizzairCookie, _wizzairRequestVerificationToken, _wizzairApiVersion);
+            WizzairApiClient client = new(_requestTemplate);
             MapDto mapDto = await client.GetMap();
 
             if (!IsAirportSupported(mapDto, airportCode))

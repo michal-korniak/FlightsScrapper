@@ -12,10 +12,16 @@ namespace FlightScrapper.Ryanair
     public class RyanairFlightsProvider : IFlightsProvider
     {
         private const int MaxNumberOfDatsToBeRequested = 6;
+        private HttpRequestMessage _ryanairTemplateRequest;
+
+        public RyanairFlightsProvider(HttpRequestMessage requestTemplate)
+        {
+            _ryanairTemplateRequest = requestTemplate;
+        }
 
         public async Task<IEnumerable<Flight>> GetFlights(AirportCode airportCode, DateRange arrivalDateRange, DateRange returnDateRange)
         {
-            RyanairApiClient client = new();
+            RyanairApiClient client = new(_ryanairTemplateRequest);
 
             Dictionary<string, AirportInfo> airportInfoByCodeDict = await CreateAirportInfoByCodeDict(client);
             IEnumerable<string> availableDestinationsAirportsCodes = await GetAvailableDestinationsAirportsCodes(client, airportCode);

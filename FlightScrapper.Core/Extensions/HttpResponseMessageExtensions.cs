@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace FlightScrapper.Wizzair.Extensions
+namespace FlightScrapper.Core.Extensions
 {
-    public class DetailedHttpRequestException: HttpRequestException
+    public class DetailedHttpRequestException : HttpRequestException
     {
         public int Code { get; }
         public override string Message { get; }
