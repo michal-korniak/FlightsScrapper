@@ -21,7 +21,7 @@ namespace FlightScrapper.Wizzair.Api
         public WizzairApiClient(HttpRequestMessage requestTemplate)
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(30);
+            _httpClient.Timeout = TimeSpan.FromSeconds(180);
             _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(5, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
             _requestTemplate = requestTemplate;
         }
