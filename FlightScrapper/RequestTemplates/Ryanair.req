@@ -1,20 +1,18 @@
-﻿GET /api/views/locate/5/airports/pl/WAW HTTP/1.1
+﻿GET /api/farfnd/v4/roundTripFares?departureAirportIataCode=WAW&market=pl-pl&adultPaxCount=1&outboundDepartureDateFrom=2023-08-01&outboundDepartureDateTo=2023-08-31&inboundDepartureDateFrom=2023-08-01&inboundDepartureDateTo=2023-08-31 HTTP/1.1
 Accept: application/json, text/plain, */*
 Accept-Encoding: gzip, deflate, br
-Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,pl;q=0.7
+Accept-Language: en-GB,en;q=0.9
 Connection: keep-alive
-Cookie: rid=4b477bad-c6d5-4050-97fa-72b6d8f7a26e; rid.sig=OCBtG/WF9HO7H4S44kdr0RcoKonXUYwnSvv12NU58yLH1/VMnwrcFmxzzxfwRKVan44SxAtDKYEqaujXfa22zcZpMjUZ2hIUIeiE0dfgfsZZFgui5RR+sArP6OA0ta41DE4ib4aufZ5HchX2G0MN2yBaMZIJkeAtDbvPX64DEbv3lrZ1W8LePf17AKzKRG5YRSMPtKD3NsCe6IwnKUh5DJ5o/jP+UgBmkz1SUg/l8aBQavucaPoMqeZp7QR5OhpemAaAeBnlde7IyFypvkPoAX9fVXmJ7oYerFVSQuewkyVIJtS/spwrEbbzghhWD7fp4+AqFmMnOptnR6XiFJkuPhwT7WXyk4YACbl/s11h9ywhB9vP9g1PrB844VREGb6V3MFwDFtqKfz5i/nFFTwHPvtj4NhcEHFeZoFd+MEhPQ5VZ/fwuCdq7u+C3MVrfkuxL+FuJleSpwZPcYV2PB42jwfzF/b3oqJ38OZxTrVBzjIH6XdGXPB+Gk4hAj6Cq0vQ0QmNL9XD6z8GqkQBTl2EsjIW2B0PecLb3bg21D/O65w=; STORAGE_PREFERENCES={"STRICTLY_NECESSARY":true,"PERFORMANCE":true,"FUNCTIONAL":true,"TARGETING":true,"SOCIAL_MEDIA":true,"PIXEL":true,"GANALYTICS":true,"__VERSION":2}; RY_COOKIE_CONSENT=true; bid_FRwdAp7a9G2cnLnTsgyBNeduseKcPcRy=e065da26-3d24-4bb4-9bbf-561bedcb66fe; fr-correlation-id=76d569a2-1357-4ce4-b3cc-8859d73f9eb6; fr-correlation-id.sig=cwTDQHZ9Qks43EEKhaxiPdHd3ws; mkt=/pl/pl/; tj_seed=00452440c25aaead224fefeb5b31000000; _ga=GA1.2.1120498003.1677744802; _hjSessionUser_135144=eyJpZCI6ImE1Y2MzYzZiLWNjYzItNTE2Zi04ZDc2LWU5MmE0ZWE4YjMzMiIsImNyZWF0ZWQiOjE2Nzc3NDQ4MTMxODksImV4aXN0aW5nIjp0cnVlfQ==; agsd=4l5EWHbnQhgqSnzrG_2ojgsNGG4ZNk-bFS5epHvvDe8_luMv; _cc=AcyPfBsMaeC6AZ8X9dn2A4oq; __zlcmid=1F0lgpehWAwAimT; AMCV_64456A9C54FA26ED0A4C98A5%40AdobeOrg=-715282455%7CMCIDTS%7C19439%7CMCMID%7C58123882097601979981458478358198702229%7CMCAAMLH-1680093057%7C6%7CMCAAMB-1680093057%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1679495457s%7CNONE%7CMCAID%7CNONE%7CMCCIDH%7C918775015%7CvVersion%7C4.2.0; _gid=GA1.2.2018414120.1684412877; fr-visit-id=084a9c70-f475-4bdb-a156-590b02b2070f; myRyanairID=; _gat_gtag_UA_153938230_2=1
+Cookie: rid=e6f1b691-130e-4e29-9d1a-94205c28378c; rid.sig=OCBtG/WF9HO7H4S44kdr0d/FqxGHYBSZ2h8om5uczWTTK58TfPbLqnTXn+dTXw4SldOWeCWh/z0T3VfyuHW3lTmlCeidXELRCReT1dhH7nwCC26j/Gaf0uXCofOYzHUmrnNtyLmK3WHGrSxFHiEz2GyTifGt0kEtugqGYtpHq6snAlJWr7LXP7X8+UxrLVBoZFF6W6bvWu1156C2Yy4H+deWm0FtXvE9vpLx7ARcTYC7jXwJReN9xkWbfaLybuFRkY1UsE/rkaa4+spBBnWfmdcspmNG/Wyq6/hy1Hz8Hp4T+6cVQ9NeRTOu3ARkj8z88HuC9Fm7amDQniXSpgrGBc6Mgv1YUFqmInIqF3czWv6eSs6b8tlMQsDvMjjhDsTArBmPOpOwNmxBefQLt35v3TGcomqcUOcWuNOj31gj689nbPf0a4/ibgwrqj22aJwdRvWZsVep8mbd6A0rebxrSpoTagDFkvmjxFhT4vHH1MZxsbUimUpb1ICsNQu8J1mzAFe+gFjBzfgBCjtltyKHpg==; mkt=/pl/pl/; fr-visit-id=af5708d3-a0c2-4af3-8859-f1f5574aff13; _ga=GA1.2.710824376.1685530778; _gid=GA1.2.85424935.1685530778; _gat_gtag_UA_153938230_2=1; myRyanairID=; STORAGE_PREFERENCES={"STRICTLY_NECESSARY":true,"PERFORMANCE":true,"FUNCTIONAL":true,"TARGETING":true,"SOCIAL_MEDIA":true,"PIXEL":true,"GANALYTICS":true,"__VERSION":2}; RY_COOKIE_CONSENT=true; bid_FRwdAp7a9G2cnLnTsgyBNeduseKcPcRy=540be848-112a-4bbf-9e34-d8265ffef6cc; fr-correlation-id=bd0a60ba-7608-49ac-98f4-c551b8411930; fr-correlation-id.sig=Ell0YcO7hFa10krhZ75umLfdrAc
 Host: www.ryanair.com
-If-Modified-Since: Wed, 17 May 2023 11:11:08 GMT
-If-None-Match: "2c884b3794e1a1be755d18eb0d13a614"
-Referer: https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=WAW&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-05-01&dateIn=2023-05-31&daysTrip=2&dayOfWeek=MONDAY&isExactDate=false&outboundFromHour=00:00&outboundToHour=23:59&inboundFromHour=00:00&inboundToHour=23:59&priceValueTo=&currency=&isFlexibleDay=false
+Referer: https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=WAW&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-08-01&dateIn=2023-08-31&daysTrip=2&dayOfWeek=WEDNESDAY&isExactDate=false&outboundFromHour=00:00&outboundToHour=23:59&inboundFromHour=00:00&inboundToHour=23:59&priceValueTo=&currency=&isFlexibleDay=false
 Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: same-origin
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36
-newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjY0NjgzMiIsImFwIjoiODMzNDI4MDM4IiwiaWQiOiJjZjk4ODBlNjdiMzUzOGM5IiwidHIiOiIxOTM5NDEyOGFmYjZkYTM4NmJkZjc5ZTJlMThiM2RlMCIsInRpIjoxNjg0NDgwODcxMzkxfX0=
+newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjY0NjgzMiIsImFwIjoiODMzNDI4MDM4IiwiaWQiOiJlOTU5NDQzYjcyN2I2ZDIxIiwidHIiOiIyY2JiYmJjNGZlN2FkNDhmZjczMzVkOWIzMzA3MmNjMCIsInRpIjoxNjg1NTMwODAyMDY1fX0=
 sec-ch-ua: "Google Chrome";v="113", "Chromium";v="113", "Not-A.Brand";v="24"
 sec-ch-ua-mobile: ?0
 sec-ch-ua-platform: "Windows"
-traceparent: 00-19394128afb6da386bdf79e2e18b3de0-cf9880e67b3538c9-01
-tracestate: 646832@nr=0-1-646832-833428038-cf9880e67b3538c9----1684480871391
+traceparent: 00-2cbbbbc4fe7ad48ff7335d9b33072cc0-e959443b727b6d21-01
+tracestate: 646832@nr=0-1-646832-833428038-e959443b727b6d21----1685530802065

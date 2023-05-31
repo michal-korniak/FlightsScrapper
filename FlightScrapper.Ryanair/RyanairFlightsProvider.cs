@@ -60,7 +60,7 @@ namespace FlightScrapper.Ryanair
             int leftArrivalDateChunks = arrivalDateChunks.Count();
             int leftReturnDateChunks = returnDateChunks.Count();
 
-            List<Task<FlightAvailabilityDto>> flightAvailabilitiesTasks = new();
+            List<FlightAvailabilityDto> flightAvailabilities = new();
             while (leftArrivalDateChunks > 0 || leftReturnDateChunks > 0)
             {
                 FlightAvailabilityParametersDto flightAvailabilityParameters = null;
@@ -81,10 +81,8 @@ namespace FlightScrapper.Ryanair
                     flightAvailabilityParameters = FlightAvailabilityParametersDtoFactory.OneWayFlight(destinationAirportCode, originAirportCode, returnDateRangeForChunk);
                 }
                 var flightAvailabilityTask = ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
-                flightAvailabilitiesTasks.Add(flightAvailabilityTask);
+                flightAvailabilities.Add(await flightAvailabilityTask);
             }
-
-            FlightAvailabilityDto[] flightAvailabilities = await Task.WhenAll(flightAvailabilitiesTasks);
 
             var flights = flightAvailabilities.SelectMany(flightAvailability
                 => flightAvailability.Trips.SelectMany(trip
