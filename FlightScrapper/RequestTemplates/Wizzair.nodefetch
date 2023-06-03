@@ -1,0 +1,19 @@
+﻿fetch("https://be.wizzair.com/17.4.0/Api/search/inspirationalFlights", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "pl,en;q=0.9,en-GB;q=0.8,en-US;q=0.7",
+    "content-type": "application/json;charset=UTF-8",
+    "sec-ch-ua": "\"Microsoft Edge\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "x-requestverificationtoken": "571d7836476d48509a9b15553cd4ad44",
+    "cookie": "ak_bmsc=B81B6DFC14E3177510A459464ABF852A~000000000000000000000000000000~YAAQRDYQYP1t1WaIAQAAVfKvcxPz6pFFbxdAOl2cy+HQmrFlF2a1cs9h6clZtVQQ+lV1b5+aUUywO0ZvUx2/Q2QosuUgng2qnPvKJHYnqAZR45T/crL7Gknluszag0Htt4I93DhC84I13lgXhP1KREX1TFwp0NlSZjn8HvZRKnsGnw4umdUlyEi7IONDl3O6i8ov2AqCSSB0+xWLS4gM1G3qZ5pNqVLkWhlBrUdVgXN2tuwF5Qwg/9fde2IQqjj2dlVnv+PUxBBOIezP+9K0DII+SQehKLTgIj0zjDqf1xKCBiCmoXM64lQ1SJ0xUQX+cx4W9FtSfUHheLTSYVZXsWBSfonj5LEGFEAmSjZ9CIM1YHUMIMKFh1HbWinzJpkySNGlAlZyv8F68RVzZ57QE/b0VqIgRSlk//0YZropdh0EkZA=; bm_sz=C0FFFD22A40308C252008A01D4D0818F~YAAQRDYQYP9t1WaIAQAAVfKvcxNrDBD5qzBBwT5qsFD0X8zBvCA+X5TWVtscX+HOnFzo2dF0CrcYDo/dXXNABsTybKWLAMNj6fQfnuYc7Xdf4AawFy7Vyk6VyKwflvG0QKgeDzr411lQbJHxxp5s89aj1Kwa/lG6Pk9fpvQDjrFJr93++YoH2iTx9DYJVV0Ko0cKV4AIDnureSily2M9svdJjo6eGOpwlzgkj8hOe9WbVSgLy9SFCCgje1jgMV3MXQEYAHodOEoxCEW3CFNxMH7q3QGD1G0PC9o8YxOwXtjO+/GhCIr1y11E2P+1cmrwxcT+dGOnoe40r5YgbpqtrSBFUYDU5dmsC1ibzczt/KwkLl+SYUTrFPIW788gv4muin5HVEP540XdbfTHbgpLmK5mN7uA1uR8siyyywTYaGzpA/zlze/ylEaI~4470585~3421234; ASP.NET_SessionId=dlx33qiy54f2nwdqiqokxjw1; RequestVerificationToken=571d7836476d48509a9b15553cd4ad44; bm_mi=E42925E87D0008A5A572F10B0B7C07C5~YAAQRDYQYF901WaIAQAArFiwcxOfzs3mMo2Dy36O1CTSvHp78QsQ8KCTpnQXbxAJTFptWZDOwNCGybnqaJl3T1gpTh3rWzTo26rNWNfryUxZrmoMB3F7kyRfyNysOGyQk/xFO7Il0L8IoOiemSgS286swiZRFbjlmgWgIMoZXDEs37PIkdmplfBBLTeBwcJfoRDQiyqWPb1NKsum/IfWEDBFYZ39M5rbGv5YEib3W/4Nu1DhfTsa26Wr6+VGfduIvJiUJfn6+yMAyj8LO62NxJU9cls1MzZrE1bITpD9OfjAIl01CKzmqW2+466nzSHRPU7FHYAlxIG6bns+lYN47JELshYYoA==~1; bm_sv=50C95D7E6803E41BC97C64E7DA8261F5~YAAQRDYQYMR01WaIAQAAKV6wcxOSNkoJNozazDp7Wb5DMqUC9JS3qxpP6Ewxn+7H8SpanynCLG984C9EPbg45H0S0Xv4fiEnpRLEUgXrf0dM9TGTyrbJCh3JBYh2CjLObHIwQIACLbQEQPFVdxbUiA5ucc+H0oYXbfc4UdrVxlzPaXkibEBYTE8znQ2Usd+BeCT+Llidl8UNb+zIp6C78mbozEwRXD7Le7bCohJLYO9KjYvi0vvchUwRQetj7E52P5Q=~1; _abck=1A042ADF9189B402227285B407781B30~-1~YAAQRDYQYMV01WaIAQAAS16wcwkVdFo68GgT29rKMGtbTFkF7ODk/U1okRt9Z22HomIYH4bisbc5HOQI4namaNQHSIfNNkNJnXCM2icBsHgRcKOxXrW31bg/wb7Ee8dPM06ljWzJTsc9fVGbegXsVhbRhPHM4gWsYQUmnvwf5nCLjAOvvWd16FYWjFz5TE6aKmlKiGbApdpEVbRb0NnYRT5TlJ/78vRsh2RFJpzIoDwrZFoTDg1AD605gnA7WlZM+gMV30HJVqvLBMQZMTAaTv0W/d5MFQoLtObumaB6jwRJSzHXoNqXKp0+rAMbrvzcM4RJqAelpdJeEcbD39VJrZb2exhgr2NyO4lLw4k3rvAct/n/GLMCsWEbGtQrFeoFxIP8nnjzilDNhSj9NnYB9KwCnnb15gFXaPFMc6S3u48NmY0zIICRH5EzkNA/1DS9FKjQuk99MDqWwLIfIf3Zsu6jLaIK~-1~-1~-1",
+    "Referer": "https://wizzair.com/pl-pl/loty/plan-wyjazdu",
+    "Referrer-Policy": "no-referrer-when-downgrade"
+  },
+  "body": "{\"departureStation\":\"KFZ\",\"destinationCategory\":0,\"dateRange\":0,\"from\":null,\"to\":null,\"travelDuration\":2,\"priceRange\":0}",
+  "method": "POST"
+});

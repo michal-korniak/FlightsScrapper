@@ -12,7 +12,7 @@ namespace FlightScrapper.App
 
                 if (finished.IsFaulted)
                 {
-                    ExceptionDispatchInfo.Capture(finished.Exception.InnerException).Throw();
+                    ExceptionDispatchInfo.Capture(finished.Exception!.InnerException!).Throw();
                 }
                 tasks = tasks.Where(task => !task.IsCompleted).ToArray();
             }

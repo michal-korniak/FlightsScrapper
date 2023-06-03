@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="RequestTemplates\Ryanair.req">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="RequestTemplates\Ryanair.nodefetch">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RequestTemplates\Wizzair.req">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="RequestTemplates\Wizzair.nodefetch">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -25,10 +25,9 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<FlightAvailabilityDto> GetFlightAvailability(FlightAvailabilityParametersDto parameters)
         {
-            var request = _requestTemplate.Clone();
+            var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/booking/v4/pl-pl/availability{HttpUtils.ToQueryString(parameters)}");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -37,10 +36,9 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<IEnumerable<RouteDto>> GetRoutes(string originAirportCode)
         {
-            var request = _requestTemplate.Clone();
+            var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/searchWidget/routes/pl/airport/{originAirportCode}");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -49,14 +47,22 @@ namespace FlightScrapper.Ryanair.Api
 
         public async Task<IEnumerable<AirportDto>> GetAirports()
         {
-            var request = _requestTemplate.Clone();
+            var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/5/airports/pl/active");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
             return await response.Content.ReadFromJsonAsync<IEnumerable<AirportDto>>();
+        }
+
+        private HttpRequestMessage CreateRequestFromTemplate()
+        {
+            var request = _requestTemplate.Clone();
+            request.Headers.Remove("Accept-Encoding");
+            request.Content = null;
+
+            return request;
         }
     }
 }

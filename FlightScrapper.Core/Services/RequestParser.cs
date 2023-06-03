@@ -1,4 +1,8 @@
-﻿namespace FlightScrapper.Core.Services
+﻿using FlightScrapper.Core.Extensions;
+using Newtonsoft.Json.Linq;
+using System.Text;
+
+namespace FlightScrapper.Core.Services
 {
     public static class RequestParser
     {
@@ -10,49 +14,41 @@
 
         public static HttpRequestMessage Parse(string requestText)
         {
-            var lines = requestText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
 
-            // Parse the request line
-            var requestLineParts = lines[0].Split(' ');
-            if (requestLineParts.Length < 3)
-                throw new ArgumentException("Invalid request line");
+            string[] fetchArgs = requestText.TrimStart("fetch(").TrimEnd(");").SplitByFirst(',');
+            string url = fetchArgs[0].Trim().Trim('"');
+            httpRequestMessage.RequestUri = new Uri(url);
 
-            HttpMethod method;
-            switch (requestLineParts[0].ToUpper())
+            if (fetchArgs.Length > 1)
             {
-                case "GET":
-                    method = HttpMethod.Get;
-                    break;
-                case "POST":
-                    method = HttpMethod.Post;
-                    break;
-                case "PUT":
-                    method = HttpMethod.Put;
-                    break;
-                case "DELETE":
-                    method = HttpMethod.Delete;
-                    break;
-                default:
-                    throw new ArgumentException("Invalid HTTP method");
+                JObject options = JObject.Parse(fetchArgs[1].Trim());
+
+                string method = (string)options["method"];
+                if (!string.IsNullOrEmpty(method))
+                {
+                    httpRequestMessage.Method = new HttpMethod(method);
+                }
+
+                JObject headers = (JObject)options["headers"];
+                if (headers != null)
+                {
+                    foreach (var header in headers)
+                    {
+                        httpRequestMessage.Headers.TryAddWithoutValidation(header.Key, (string)header.Value);
+                    }
+                }
+
+                string body = (string)options["body"];
+                if (body != null)
+                {
+                    httpRequestMessage.Content = new StringContent(body);
+                }
             }
 
-            var requestUri = requestLineParts[1];
-
-            var request = new HttpRequestMessage(method, requestUri);
-
-            // Parse the headers
-            foreach (var line in lines.Skip(1))
-            {
-                if (string.IsNullOrWhiteSpace(line)) break; // End of headers
-
-                var parts = line.Split(new[] { ": " }, 2, StringSplitOptions.None);
-                if (parts.Length < 2) throw new ArgumentException($"Invalid header line: {line}");
-
-                request.Headers.TryAddWithoutValidation(parts[0], parts[1]);
-            }
-
-            return request;
+            return httpRequestMessage;
         }
+
     }
 
 

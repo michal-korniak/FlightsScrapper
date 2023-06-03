@@ -16,7 +16,7 @@ namespace FlightScrapper.Wizzair.Api
         private readonly HttpClient _httpClient;
         private readonly AsyncRetryPolicy _retryPolicy;
         private readonly HttpRequestMessage _requestTemplate;
-        private string _wizzairApiVersion => _requestTemplate.RequestUri.OriginalString.Split('/')[1];
+        private string _wizzairApiVersion => _requestTemplate.RequestUri.LocalPath.Split('/')[1];
 
         public WizzairApiClient(HttpRequestMessage requestTemplate)
         {
@@ -28,9 +28,9 @@ namespace FlightScrapper.Wizzair.Api
 
         public async Task<MapDto> GetMap()
         {
-            var request = _requestTemplate.Clone();
+            var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl");
-            request.Headers.Remove("Accept-Encoding");
+            request.Method = HttpMethod.Get;
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -39,17 +39,26 @@ namespace FlightScrapper.Wizzair.Api
 
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
-            var request = _requestTemplate.Clone();
+            var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable");
             request.Method = HttpMethod.Post;
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
-            request.Headers.Remove("Accept-Encoding");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
             var responseBody = await response.Content.ReadFromJsonAsync<TimetableDto>();
             return responseBody;
+        }
+
+
+        private HttpRequestMessage CreateRequestFromTemplate()
+        {
+            var request = _requestTemplate.Clone();
+            request.Headers.Remove("Accept-Encoding");
+            request.Content = null;
+
+            return request;
         }
     }
 }

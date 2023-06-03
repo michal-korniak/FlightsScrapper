@@ -22,8 +22,8 @@ public class Program
         Stopwatch stopwatch = Stopwatch.StartNew();
         IEnumerable<Flight> allFlights;
 
-        HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.req");
-        HttpRequestMessage ryanairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Ryanair.req");
+        HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.nodefetch");
+        HttpRequestMessage ryanairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Ryanair.nodefetch");
         WizzairFlightsProvider wizzairFlightProvider = new(wizzairTemplateRequest);
         RyanairFlightsProvider ryanairFlightProvider = new(ryanairTemplateRequest);
 

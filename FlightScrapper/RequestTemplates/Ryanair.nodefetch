@@ -1,0 +1,22 @@
+﻿fetch("https://www.ryanair.com/api/views/locate/5/airports/pl/LUZ", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "pl,en;q=0.9,en-GB;q=0.8,en-US;q=0.7",
+    "if-modified-since": "Tue, 30 May 2023 14:40:41 GMT",
+    "if-none-match": "\"c1ba12bf438e56c4fca0f5cac1acb910\"",
+    "newrelic": "eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjY0NjgzMiIsImFwIjoiODMzNDI4MDM4IiwiaWQiOiI3YTdiNmQ1MzRkNGFkYzAwIiwidHIiOiI5Mjk5Y2Q2MTQyZGZmZGU0MjFjODFkODE2YzNhY2Q5MCIsInRpIjoxNjg1NTY4OTYzMjgyfX0=",
+    "sec-ch-ua": "\"Microsoft Edge\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "traceparent": "00-9299cd6142dffde421c81d816c3acd90-7a7b6d534d4adc00-01",
+    "tracestate": "646832@nr=0-1-646832-833428038-7a7b6d534d4adc00----1685568963282",
+    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; rid.sig=OCBtG/WF9HO7H4S44kdr0XSQsRjb6wrMtK6yiaTIhIJDD/gW1upfOvUXKPq1nAMUfhfcx4WWYX0xG2Wp/d4ollEog2FLSED8EzqTbLllN3u4c32K9s7XIKnQLSB9yIPfBVIPeHaIPFgH3lZ3hQt2knRGC3krMuAZkznwdaAWiLIdSsHZrNsIGXzURyHz4tpHifZ1M8Z2d/djSUoywJe7eksBkm98OQMUF4EML1yeQMdJcZhA0BJaLEgUUA/SbsPV7zaK2Yrx4HaexWyvh7CajDKnYU5gR+yDQi9q7Yw4YoLstN/SEH/7ymA7NHD9WRf/wdiOZ/TM3vXoYGRkUZI3ckYSKNduALETu0+IrFUa7jaPxVC88jmJOOpgzptZH+iC5V7YmQ6SsgXi7L0dBMKtGBk+2isP8zqZhM8yb1aD1ossYOCfvynLVLn/TtUxUM9xxXiUuSp4/p3v7Pvwu0uqDUyWdSQO0sbtO9jThI9gek8rabjR5hXsuFCrdBbEccxK3lEZKw9A5xQyawfX3muB/ja96PDIQwts2MUKVMN6E0x5U21qw3CPJo+1edZQ4uILAVCEEKMMBxmKb4FyzztDD0C0198nA2pIV7y/+0XHKNiNIUHpoOOOc6ecHG7Tafp1tJmR2l0z4F4PJMiq2SlKDHnQHF7AjNekn4cei8NB5Ya49H3bw6g+hHisO4GhbRYFgMzNGnVVmIva9Z4LwFhfsWLBnx7lKbG90N8UKVUZEYga+5/OEXAtkAd8oHRjVpQoSWykgcqt9V5dyvelFqgv+T65ZGpUtZeJ4GW6iaDM8no=; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; fr-visit-id=f9c04007-636e-4bc2-990e-4c4647e6f7d1; myRyanairID=",
+    "Referer": "https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=LUZ&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-07-01&dateIn=2023-07-31&daysTrip=2&dayOfWeek=WEDNESDAY&isExactDate=false&outboundFromHour=00%3A00&outboundToHour=23%3A59&inboundFromHour=00%3A00&inboundToHour=23%3A59&priceValueTo=&currency=&isFlexibleDay=false",
+    "Referrer-Policy": "same-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
