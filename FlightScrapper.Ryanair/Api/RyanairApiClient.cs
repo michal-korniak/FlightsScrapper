@@ -28,6 +28,7 @@ namespace FlightScrapper.Ryanair.Api
             var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/booking/v4/pl-pl/availability{HttpUtils.ToQueryString(parameters)}");
             request.Method = HttpMethod.Get;
+            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -39,6 +40,7 @@ namespace FlightScrapper.Ryanair.Api
             var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/searchWidget/routes/pl/airport/{originAirportCode}");
             request.Method = HttpMethod.Get;
+            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -50,6 +52,7 @@ namespace FlightScrapper.Ryanair.Api
             var request = CreateRequestFromTemplate();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/5/airports/pl/active");
             request.Method = HttpMethod.Get;
+            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
