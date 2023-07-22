@@ -25,7 +25,7 @@ public class Program
 
         HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.nodefetch");
         HttpRequestMessage ryanairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Ryanair.nodefetch");
-        IFlightsProvider wizzairFlightProvider = new DummyFlightsProvider(wizzairTemplateRequest);
+        IFlightsProvider wizzairFlightProvider = new WizzairFlightsProvider(wizzairTemplateRequest);
         IFlightsProvider ryanairFlightProvider = new RyanairFlightsProvider(ryanairTemplateRequest);
 
         Task<IEnumerable<Flight>> ryanairFlightsTask = GetFlightsForAirports(ryanairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
