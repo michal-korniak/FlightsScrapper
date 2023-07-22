@@ -1,4 +1,5 @@
-﻿using FlightScrapper.Core.Contract;
+﻿using FlightScrapper.App.Mocks;
+using FlightScrapper.Core.Contract;
 using FlightScrapper.Core.Models;
 using FlightScrapper.Core.Services;
 using FlightScrapper.Ryanair;
@@ -24,8 +25,8 @@ public class Program
 
         HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.nodefetch");
         HttpRequestMessage ryanairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Ryanair.nodefetch");
-        WizzairFlightsProvider wizzairFlightProvider = new(wizzairTemplateRequest);
-        RyanairFlightsProvider ryanairFlightProvider = new(ryanairTemplateRequest);
+        IFlightsProvider wizzairFlightProvider = new DummyFlightsProvider(wizzairTemplateRequest);
+        IFlightsProvider ryanairFlightProvider = new RyanairFlightsProvider(ryanairTemplateRequest);
 
         Task<IEnumerable<Flight>> ryanairFlightsTask = GetFlightsForAirports(ryanairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);
         Task<IEnumerable<Flight>> wizzairFlightsTask = GetFlightsForAirports(wizzairFlightProvider, AirportsCodes, ArrivalDateRange, ReturnDateRange);

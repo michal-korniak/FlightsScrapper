@@ -1,7 +1,9 @@
-﻿fetch("https://www.ryanair.com/api/farfnd/v4/roundTripFares?departureAirportIataCode=LUZ&outboundDepartureDateFrom=2023-07-24&market=pl-pl&adultPaxCount=1&outboundDepartureDateTo=2023-07-24&inboundDepartureDateFrom=2023-07-25&inboundDepartureDateTo=2023-07-25&outboundDepartureDaysOfWeek=MONDAY&durationFrom=1&durationTo=1&outboundDepartureTimeFrom=00:00&outboundDepartureTimeTo=23:59&inboundDepartureTimeFrom=00:00&inboundDepartureTimeTo=23:59", {
+﻿fetch("https://www.ryanair.com/api/views/locate/5/airports/pl/LUZ", {
   "headers": {
     "accept": "application/json, text/plain, */*",
     "accept-language": "pl,en;q=0.9,en-GB;q=0.8,en-US;q=0.7",
+    "if-modified-since": "Thu, 20 Jul 2023 13:27:53 GMT",
+    "if-none-match": "\"c1ba12bf438e56c4fca0f5cac1acb910\"",
     "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Microsoft Edge\";v=\"114\"",
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\"",
@@ -9,7 +11,6 @@
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "x-newrelic-id": "undefined",
-    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; myRyanairID=; rid.sig=RrjjHNquuQZkrfRiOnO9aIGMzwWPkQaeL5Dt0p5OmP6UqFUIrJQGY6qMeczKlySZCkXiXnXgSrQY40Zyd/97xSL20j1HxEl6Ed3IpPZr4RRTYWWBJylA5cQVOZ6OhfV2WZ67TUoK3RWEDn23mx8LojsRSfz8qO1YC9JndYbCWdxTH12z0QPlk2/OOITgy4vblMf4CCYO/U3NJ5thZ7gu2jNrqMBXRXxW5iNALGe5yFk3OB1LBrpBpIw2wekcdDTueAyk+n+2WWk6pzr/ygb6qrynEbGItLbzaf239HJuayzzMwzUwtOB4s41jx0GK59Vtw7k0wjqwqK5wpNpxGyw9crL/SY/Gzsm0fvSQ3L8+oc74jiKu6LZ65dRcwGNCMgb7fSRcmtncqZbO6hQknSWQTKTrqjSbzn7jh3K3930P3zQFr7jqzTNrxgAnQrLB7AbKvUxD7BvsBPbAUASShKGgmbcB7vgcUsmcvB0RHemYaNhePvcXSRfTZgw042Y9c7LvM8h6IKj9tsZKwimtQ6zqCW03M+lVYJxzFAehv51ZkQFlQtCN2nE/YG3DuA3tNbP9VPHbwhhE45Wx3MS6HCBrGnDoglaKBR5sHn3vg2LOvo=",
     "Referer": "https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=LUZ&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-07-01&dateIn=2023-07-31&daysTrip=2&dayOfWeek=MONDAY&isExactDate=false&outboundFromHour=00%3A00&outboundToHour=23%3A59&inboundFromHour=00%3A00&inboundToHour=23%3A59&priceValueTo=&currency=&isFlexibleDay=false",
     "Referrer-Policy": "same-origin"
   },
