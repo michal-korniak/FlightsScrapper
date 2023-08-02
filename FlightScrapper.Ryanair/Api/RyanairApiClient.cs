@@ -1,4 +1,5 @@
 ﻿using FlightScrapper.Core.Extensions;
+using FlightScrapper.Core.Services;
 using FlightScrapper.Ryanair.Api.RequestModels;
 using FlightScrapper.Ryanair.Api.ResponseModels.FlightAvailability;
 using FlightScrapper.Ryanair.Api.ResponseModels.Routes;
@@ -18,17 +19,16 @@ namespace FlightScrapper.Ryanair.Api
         public RyanairApiClient(HttpRequestMessage requestTemplate)
         {
             _requestTemplate = requestTemplate;
-            _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(30);
+            _httpClient = HttpClientFactory.CreateHttpClient();
             _retryPolicy = Policy.Handle<TimeoutException>().RetryAsync(3);
         }
 
         public async Task<FlightAvailabilityDto> GetFlightAvailability(FlightAvailabilityParametersDto parameters)
         {
             var request = CreateRequestFromTemplate();
+            request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/booking/v4/pl-pl/availability{HttpUtils.ToQueryString(parameters)}");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -38,9 +38,9 @@ namespace FlightScrapper.Ryanair.Api
         public async Task<IEnumerable<RouteDto>> GetRoutes(string originAirportCode)
         {
             var request = CreateRequestFromTemplate();
+            request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/searchWidget/routes/pl/airport/{originAirportCode}");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();
@@ -50,9 +50,9 @@ namespace FlightScrapper.Ryanair.Api
         public async Task<IEnumerable<AirportDto>> GetAirports()
         {
             var request = CreateRequestFromTemplate();
+            request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://www.ryanair.com/api/views/locate/5/airports/pl/active");
             request.Method = HttpMethod.Get;
-            request.Headers.Remove("cookie");
 
             HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
             await response.EnsureSuccess();

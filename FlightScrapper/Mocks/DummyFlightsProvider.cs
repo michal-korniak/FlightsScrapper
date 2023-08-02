@@ -10,8 +10,11 @@ namespace FlightScrapper.App.Mocks
 {
     internal class DummyFlightsProvider : IFlightsProvider
     {
+        public DummyFlightsProvider()
+        {
+        }
 
-        public DummyFlightsProvider(HttpRequestMessage wizzairTemplateRequest)
+        public DummyFlightsProvider(HttpRequestMessage templateRequest)
         {
         }
 

@@ -13,18 +13,18 @@ namespace FlightScrapper.App;
 
 public class Program
 {
-    private readonly static int MaxTripLenghtInDays = 7;
-    private readonly static DateRange ArrivalDateRange = new(DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(40));
-    private readonly static DateRange ReturnDateRange = new(DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(40));
-    private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.LUZ, AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE };
+    private readonly static int MaxTripLenghtInDays = 17;
+    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 08, 15), new DateTime(2023, 12, 01));
+    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 08, 15), new DateTime(2023, 12, 01));
+    private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE, AirportCode.LUZ };
 
     public static async Task Main()
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
         IEnumerable<Flight> allFlights;
 
-        HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.nodefetch");
         HttpRequestMessage ryanairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Ryanair.nodefetch");
+        HttpRequestMessage wizzairTemplateRequest = await RequestParser.ParseFromFile("RequestTemplates/Wizzair.nodefetch");
         IFlightsProvider wizzairFlightProvider = new WizzairFlightsProvider(wizzairTemplateRequest);
         IFlightsProvider ryanairFlightProvider = new RyanairFlightsProvider(ryanairTemplateRequest);
 

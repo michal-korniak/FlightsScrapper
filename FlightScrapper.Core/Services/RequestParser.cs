@@ -14,11 +14,11 @@ namespace FlightScrapper.Core.Services
 
         public static HttpRequestMessage Parse(string requestText)
         {
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+            HttpRequestMessage request = new HttpRequestMessage();
 
             string[] fetchArgs = requestText.TrimStart("fetch(").TrimEnd(");").SplitByFirst(',');
             string url = fetchArgs[0].Trim().Trim('"');
-            httpRequestMessage.RequestUri = new Uri(url);
+            request.RequestUri = new Uri(url);
 
             if (fetchArgs.Length > 1)
             {
@@ -27,7 +27,7 @@ namespace FlightScrapper.Core.Services
                 string method = (string)options["method"];
                 if (!string.IsNullOrEmpty(method))
                 {
-                    httpRequestMessage.Method = new HttpMethod(method);
+                    request.Method = new HttpMethod(method);
                 }
 
                 JObject headers = (JObject)options["headers"];
@@ -35,18 +35,19 @@ namespace FlightScrapper.Core.Services
                 {
                     foreach (var header in headers)
                     {
-                        httpRequestMessage.Headers.TryAddWithoutValidation(header.Key, (string)header.Value);
+                        string headerValue = ((string)header.Value).Trim();
+                        request.Headers.TryAddWithoutValidation(header.Key, headerValue);
                     }
                 }
 
                 string body = (string)options["body"];
                 if (body != null)
                 {
-                    httpRequestMessage.Content = new StringContent(body);
+                    request.Content = new StringContent(body);
                 }
             }
 
-            return httpRequestMessage;
+            return request;
         }
 
     }

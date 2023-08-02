@@ -18,6 +18,18 @@ namespace FlightScrapper.Core.Extensions
             return clone;
         }
 
+        public static HttpRequestMessage AddBrowserUserAgent(this HttpRequestMessage req)
+        {
+            req.Headers.Add("user-agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188");
+            return req;
+        }
+
+        public static string GetCookieValue(this HttpRequestMessage request)
+        {
+            var cookies = request.Headers.GetValues("cookie");
+            return cookies.FirstOrDefault();
+        }
+
         public static string ToCurlCommand(this HttpRequestMessage request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -28,14 +40,14 @@ namespace FlightScrapper.Core.Extensions
 
             foreach (var header in request.Headers)
             {
-                stringBuilder.AppendFormat(" -H \"{0}: {1}\"", header.Key, string.Join(", ", header.Value));
+                stringBuilder.AppendFormat(" -H \"{0}: {1}\"", header.Key, EscapeHeaderValue(string.Join(", ", header.Value)));
             }
 
             if (request.Content != null)
             {
                 foreach (var header in request.Content.Headers)
                 {
-                    stringBuilder.AppendFormat(" -H \"{0}: {1}\"", header.Key, string.Join(", ", header.Value));
+                    stringBuilder.AppendFormat(" -H \"{0}: {1}\"", header.Key, EscapeHeaderValue(string.Join(", ", header.Value)));
                 }
 
                 if (request.Content is StringContent || request.Content is ByteArrayContent)
@@ -68,5 +80,12 @@ namespace FlightScrapper.Core.Extensions
 
             return stringBuilder.ToString();
         }
+
+        private static string EscapeHeaderValue(string value)
+        {
+            // Escaping characters that could break the curl command
+            return value.Replace("\"", "\\\"").Replace("(", "\\(").Replace(")", "\\)");
+        }
+
     }
 }

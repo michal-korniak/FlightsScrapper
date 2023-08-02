@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using FlightScrapper.Core.Extensions;
+using FlightScrapper.Core.Services;
 
 namespace FlightScrapper.Wizzair.Api
 {
@@ -20,8 +21,7 @@ namespace FlightScrapper.Wizzair.Api
 
         public WizzairApiClient(HttpRequestMessage requestTemplate)
         {
-            _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(180);
+            _httpClient = HttpClientFactory.CreateHttpClient(180);
             _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(5, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
             _requestTemplate = requestTemplate;
         }
@@ -29,6 +29,7 @@ namespace FlightScrapper.Wizzair.Api
         public async Task<MapDto> GetMap()
         {
             var request = CreateRequestFromTemplate();
+            request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl");
             request.Method = HttpMethod.Get;
 
@@ -40,6 +41,7 @@ namespace FlightScrapper.Wizzair.Api
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
             var request = CreateRequestFromTemplate();
+            request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable");
             request.Method = HttpMethod.Post;
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));
@@ -55,7 +57,6 @@ namespace FlightScrapper.Wizzair.Api
         private HttpRequestMessage CreateRequestFromTemplate()
         {
             var request = _requestTemplate.Clone();
-            request.Headers.Remove("Accept-Encoding");
             request.Content = null;
 
             return request;
