@@ -1,7 +1,9 @@
-﻿fetch("https://www.ryanair.com/api/booking/v4/pl-pl/availability?ADT=1&TEEN=0&CHD=0&INF=0&Origin=LUZ&Destination=LTN&promoCode=&IncludeConnectingFlights=false&Disc=0&DateOut=2023-08-04&FlexDaysBeforeOut=2&FlexDaysOut=2&DateIn=2023-09-02&FlexDaysBeforeIn=2&FlexDaysIn=2&RoundTrip=true&ToUs=AGREED", {
+﻿fetch("https://www.ryanair.com/api/views/locate/5/airports/pl/LUZ", {
   "headers": {
     "accept": "application/json, text/plain, */*",
     "accept-language": "pl,en;q=0.9,en-GB;q=0.8,en-US;q=0.7",
+    "if-modified-since": "Mon, 31 Jul 2023 09:02:21 GMT",
+    "if-none-match": "\"c1ba12bf438e56c4fca0f5cac1acb910\"",
     "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Microsoft Edge\";v=\"115\", \"Chromium\";v=\"115\"",
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\"",
@@ -9,8 +11,8 @@
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "x-newrelic-id": "undefined",
-    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; myRyanairID=; .AspNetCore.Session=CfDJ8DbeutQIMjNJj8Vc5WRNcj042d9BeSYz8ZZ%2Fx7EjPs%2F4qE5K9EeQyjGO4JM8kwh%2FYG5I7SMnU6ZOPk6glLLU36uFuUNU3hwFR1H%2BZH1yRH6aIPdsmO7uNaZEszm6LdlFRxSMbREovj4WI4E%2BgcMlqv5CoprqlvGrExLf6Vk9rt%2Fe; rid.sig=RrjjHNquuQZkrfRiOnO9aIGMzwWPkQaeL5Dt0p5OmP6UqFUIrJQGY6qMeczKlySZCkXiXnXgSrQY40Zyd/97xSL20j1HxEl6Ed3IpPZr4RRTYWWBJylA5cQVOZ6OhfV2WZ67TUoK3RWEDn23mx8LotCEj0alP0W6zIk2T9gcUejn5SFO2kEDXPfSyQktqG37TNBTA01iD2GpMSsejltFAJELv6Xf7IDmBwc5Ev45UWlrhAi/JQeopBXOoKUg0mNRjjt18bHquvqi8jNxniSJL2NIjaJo7Au5TZvTgn0AlDMBrTF1m2CITENBBlpgHIDPQt4k9vnALoQXbwX9LbH2FYmfqRie2ubMHVhi5JBaa3DTp9UnZ3JDMHkafip2PYfP373o6CMnDplXOzghqNyaHg7Qbz6GG1o7bHU8SHLd2FKdzXW8tG7Y+lEDkHgPb2AFAqwIeuytvaBp4SUU/cyQJ1lG2kbMy46IZIkLBJWlk5Qb6Ou1QfDVLIQ/52nJVSByIoJ9Yg4DwqL5drGdLqOzspcC6WsG0IepsU8Z4EWrLsmsKYAGJDocYa05kEzZXXAL0cSV+b7zpjITbUIc2jEAZN5giagOkJHne2tM7TZ1sYWunqKx/GfiqfL2o2rcEMWj08WHAsFW7Np6rowVyqPAEw==",
-    "Referer": "https://www.ryanair.com/pl/pl/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2023-08-03&dateIn=2023-09-01&isConnectedFlight=false&isReturn=true&discount=0&promoCode=&originIata=LUZ&destinationIata=LTN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2023-08-03&tpEndDate=2023-09-01&tpDiscount=0&tpPromoCode=&tpOriginIata=LUZ&tpDestinationIata=LTN",
+    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; myRyanairID=; rid.sig=RrjjHNquuQZkrfRiOnO9aIGMzwWPkQaeL5Dt0p5OmP6UqFUIrJQGY6qMeczKlySZCkXiXnXgSrQY40Zyd/97xSL20j1HxEl6Ed3IpPZr4RRTYWWBJylA5cQVOZ6OhfV2WZ67TUoK3RWEDn23mx8LotCEj0alP0W6zIk2T9gcUeghF3NugDgqa9haz/CF49uj0thQEyXeL7SG5nz87m7dkRBqk6ZTg3HSMYqIIcYCCBfmnsp1DJmLeCpJjcD0GznZxqKX5SdEecWCmlU58njkzYoFupcuvoUNDSke0OJYrh6+zIf7A2QluDFYef22VMAlV8xoAlTC9MrXcysdceeQiZk26D3JEknkwOZuIozLd+clmYRLhyK7okXQCZ+9lml7alu9x82OQWVYF+9t7oqviGk7BhwrhpQSOpf+Sk2UzK8pH1M9dpinw1mV7nLTZFnWcSALKuGchO5y5Igik5aE4wz/E9zC6CmrbgzOqu3v30cAGQVfra2CuHuMKtsiiWKN9fYWoIPsvRxBnlb690KQW9kdSKQluPU1C6UjP2SfmzMN2MtRkeA5vzdYmTv6pyCwEk7lfIooimFHFKQRdAmUyj9CddhX8UK7/mKSyT2icVPDh22gehdk3AoOb+5mox9m4I3r7UW/99NaAjH3rCRlxBywSTVJo/VYPHl0GI2eSoo=",
+    "Referer": "https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=LUZ&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-09-01&dateIn=2023-09-30&daysTrip=2&dayOfWeek=WEDNESDAY&isExactDate=false&outboundFromHour=00%3A00&outboundToHour=23%3A59&inboundFromHour=00%3A00&inboundToHour=23%3A59&priceValueTo=&currency=&isFlexibleDay=false",
     "Referrer-Policy": "same-origin"
   },
   "body": null,

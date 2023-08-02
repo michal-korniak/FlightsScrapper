@@ -14,32 +14,32 @@ namespace FlightScrapper.Wizzair.Api
 {
     internal class WizzairApiClient
     {
-        private readonly HttpClient _httpClient;
         private readonly AsyncRetryPolicy _retryPolicy;
         private readonly HttpRequestMessage _requestTemplate;
         private string _wizzairApiVersion => _requestTemplate.RequestUri.LocalPath.Split('/')[1];
 
         public WizzairApiClient(HttpRequestMessage requestTemplate)
         {
-            _httpClient = HttpClientFactory.CreateHttpClient(180);
             _retryPolicy = Policy.Handle<TimeoutException>().WaitAndRetryAsync(5, retryNumber => TimeSpan.FromSeconds(retryNumber * 3));
             _requestTemplate = requestTemplate;
         }
 
         public async Task<MapDto> GetMap()
         {
+            var httpClient = HttpClientFactory.CreateHttpClient(180);
             var request = CreateRequestFromTemplate();
             request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl");
             request.Method = HttpMethod.Get;
 
-            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await httpClient.SendAsync(request));
             await response.EnsureSuccess();
             return await response.Content.ReadFromJsonAsync<MapDto>();
         }
 
         public async Task<TimetableDto> GetTimetable(TimetableRequestDto timetableRequest)
         {
+            var httpClient = HttpClientFactory.CreateHttpClient(180);
             var request = CreateRequestFromTemplate();
             request.AddBrowserUserAgent();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable");
@@ -47,7 +47,7 @@ namespace FlightScrapper.Wizzair.Api
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
 
-            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await _httpClient.SendAsync(request));
+            HttpResponseMessage response = await _retryPolicy.ExecuteAsync(async () => await httpClient.SendAsync(request));
             await response.EnsureSuccess();
             var responseBody = await response.Content.ReadFromJsonAsync<TimetableDto>();
             return responseBody;
