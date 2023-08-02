@@ -80,8 +80,9 @@ namespace FlightScrapper.Ryanair
                     var returnDateRangeForChunk = returnDateChunks.ElementAt(--leftReturnDateChunks);
                     flightAvailabilityParameters = FlightAvailabilityParametersDtoFactory.OneWayFlight(destinationAirportCode, originAirportCode, returnDateRangeForChunk);
                 }
-                var flightAvailabilityTask = ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
-                flightAvailabilities.Add(await flightAvailabilityTask);
+                var flightAvailability = await ryanairApiClient.GetFlightAvailability(flightAvailabilityParameters);
+                flightAvailabilities.Add(flightAvailability);
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
 
             var flights = flightAvailabilities.SelectMany(flightAvailability

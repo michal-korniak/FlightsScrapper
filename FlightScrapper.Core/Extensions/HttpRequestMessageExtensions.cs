@@ -24,6 +24,13 @@ namespace FlightScrapper.Core.Extensions
             return req;
         }
 
+
+        public static HttpRequestMessage AddKeepAliveHeader(this HttpRequestMessage req)
+        {
+            req.Headers.Add("Connection", "keep-alive");
+            return req;
+        }
+
         public static string GetCookieValue(this HttpRequestMessage request)
         {
             var cookies = request.Headers.GetValues("cookie");

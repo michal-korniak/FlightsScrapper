@@ -14,8 +14,8 @@ namespace FlightScrapper.App;
 public class Program
 {
     private readonly static int MaxTripLenghtInDays = 17;
-    private readonly static DateRange ArrivalDateRange = new(new DateTime(2023, 08, 15), new DateTime(2023, 12, 01));
-    private readonly static DateRange ReturnDateRange = new(new DateTime(2023, 08, 15), new DateTime(2023, 12, 01));
+    private readonly static DateRange ArrivalDateRange = new(DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(61));
+    private readonly static DateRange ReturnDateRange = new(DateTime.UtcNow.AddDays(1), DateTime.UtcNow.AddDays(61));
     private readonly static List<AirportCode> AirportsCodes = new() { AirportCode.KRK, AirportCode.WMI, AirportCode.WAW, AirportCode.RZE, AirportCode.LUZ };
 
     public static async Task Main()

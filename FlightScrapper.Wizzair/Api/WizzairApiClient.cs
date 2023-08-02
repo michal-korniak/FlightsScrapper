@@ -29,6 +29,7 @@ namespace FlightScrapper.Wizzair.Api
             var httpClient = HttpClientFactory.CreateHttpClient(180);
             var request = CreateRequestFromTemplate();
             request.AddBrowserUserAgent();
+            request.AddKeepAliveHeader();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/asset/map?languageCode=pl-pl");
             request.Method = HttpMethod.Get;
 
@@ -42,6 +43,7 @@ namespace FlightScrapper.Wizzair.Api
             var httpClient = HttpClientFactory.CreateHttpClient(180);
             var request = CreateRequestFromTemplate();
             request.AddBrowserUserAgent();
+            request.AddKeepAliveHeader();
             request.RequestUri = new Uri($"https://be.wizzair.com/{_wizzairApiVersion}/Api/search/timetable");
             request.Method = HttpMethod.Post;
             request.Content = new StringContent(JsonSerializer.Serialize(timetableRequest));

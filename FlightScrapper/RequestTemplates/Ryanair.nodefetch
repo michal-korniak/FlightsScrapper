@@ -1,18 +1,15 @@
-﻿fetch("https://www.ryanair.com/api/views/locate/5/airports/pl/LUZ", {
+﻿fetch("https://www.ryanair.com/api/booking/v4/pl-pl/availability?ADT=1&TEEN=0&CHD=0&INF=0&Origin=LUZ&Destination=LTN&promoCode=&IncludeConnectingFlights=false&Disc=0&DateOut=2023-08-03&FlexDaysBeforeOut=2&FlexDaysOut=2&DateIn=2023-09-01&FlexDaysBeforeIn=2&FlexDaysIn=2&RoundTrip=true&ToUs=AGREED", {
   "headers": {
     "accept": "application/json, text/plain, */*",
     "accept-language": "pl,en;q=0.9,en-GB;q=0.8,en-US;q=0.7",
-    "if-modified-since": "Mon, 31 Jul 2023 09:02:21 GMT",
-    "if-none-match": "\"c1ba12bf438e56c4fca0f5cac1acb910\"",
     "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Microsoft Edge\";v=\"115\", \"Chromium\";v=\"115\"",
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\"",
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "x-newrelic-id": "undefined",
-    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; myRyanairID=; rid.sig=RrjjHNquuQZkrfRiOnO9aIGMzwWPkQaeL5Dt0p5OmP6UqFUIrJQGY6qMeczKlySZCkXiXnXgSrQY40Zyd/97xSL20j1HxEl6Ed3IpPZr4RRTYWWBJylA5cQVOZ6OhfV2WZ67TUoK3RWEDn23mx8LotCEj0alP0W6zIk2T9gcUeghF3NugDgqa9haz/CF49uj0thQEyXeL7SG5nz87m7dkRBqk6ZTg3HSMYqIIcYCCBfmnsp1DJmLeCpJjcD0GznZxqKX5SdEecWCmlU58njkzYoFupcuvoUNDSke0OJYrh6+zIf7A2QluDFYef22VMAlV8xoAlTC9MrXcysdceeQiZk26D3JEknkwOZuIozLd+clmYRLhyK7okXQCZ+9lml7alu9x82OQWVYF+9t7oqviGk7BhwrhpQSOpf+Sk2UzK8pH1M9dpinw1mV7nLTZFnWcSALKuGchO5y5Igik5aE4wz/E9zC6CmrbgzOqu3v30cAGQVfra2CuHuMKtsiiWKN9fYWoIPsvRxBnlb690KQW9kdSKQluPU1C6UjP2SfmzMN2MtRkeA5vzdYmTv6pyCwEk7lfIooimFHFKQRdAmUyj9CddhX8UK7/mKSyT2icVPDh22gehdk3AoOb+5mox9m4I3r7UW/99NaAjH3rCRlxBywSTVJo/VYPHl0GI2eSoo=",
-    "Referer": "https://www.ryanair.com/pl/pl/cheap-flights-beta?originIata=LUZ&destinationIata=ANY&isReturn=true&isMacDestination=false&promoCode=&adults=1&teens=0&children=0&infants=0&dateOut=2023-09-01&dateIn=2023-09-30&daysTrip=2&dayOfWeek=WEDNESDAY&isExactDate=false&outboundFromHour=00%3A00&outboundToHour=23%3A59&inboundFromHour=00%3A00&inboundToHour=23%3A59&priceValueTo=&currency=&isFlexibleDay=false",
+    "cookie": "rid=8ec1bfa3-24b0-4e85-b2f9-f3acdde2bbc9; mkt=/pl/pl/; fr-correlation-id=2121daf6-c657-4d11-8c86-236cd3773e7e; fr-correlation-id.sig=opfXfhIJinUJZWjAUDNDA3cPvjo; STORAGE_PREFERENCES={\"STRICTLY_NECESSARY\":true,\"PERFORMANCE\":false,\"FUNCTIONAL\":false,\"TARGETING\":false,\"SOCIAL_MEDIA\":false,\"PIXEL\":false,\"GANALYTICS\":true,\"__VERSION\":2}; myRyanairID=; rid.sig=jyna6R42wntYgoTpqvxHMK7H+KyM6xLed+9I3KsvYZaVt7P36AL6zp9dGFPu5uVxaIiFpNXrszr+LfNCdY3ITy7uuTV7plZW9uYiTJZiv9Hwf1bb1FyJIILbnTJguX+Ub7428isbhA0ii99NI1FbYuykyC0SCHM9V/rMz6HuAA7uhfBmTfkAtbWp2lFrGtIBnNLrBSihhg+RjEUwlQrhCFSskLYJGD1KRr6vXRrum6hm2ituZYWs6Tt2C97YpoTDYpOTkPYLniAQxkF5fFGiPjSlC1OiH6/pKFt0gyP/7cjsKALPRuK4ACZyQDb3A4JsoaqYxOULKkENny4sA2R2cPpna3Qm+hFeSTTToBKh0FAR+j0Fu5N/yB1TPVQ1laLf6TTZXdsKKvuDka1V4auXvbD/1/oBk34E1m9SWldr05pAPD2Ol2777VWV1Qi3bfioK7kTyCW1UTcVbDVgcjyIwKHtoSkiSFDsMfv6JIW7BixVFQnDhgT1AtXn1Z1fF+gndFitNVIDQ5Y6OwC0GKGJKfBvS7vbAIARSWJUKoepV257UMp4V+/OO/eyNXoSwjeG+CAR1CXmXzTqaTs9PaFi+XuAgNWJdhhN/azIK1skf2lJfd33XsDhDdp0uL1BIgLqMXv93lUxnGcxJfETa+7X9ItBjEP2l0WLoniAiwxm/FYXlmT9VX+EpFEGvPxH03ld5L7e20k6pPjodezFlqEFasJm4g93of3FYR9SCFFyNYJccrwyJ5bGac6kA5WBsrKpmUJx0xhvZ9gs9onscocbbA2EqEw23rZ9DMnAUO3xIHM=",
+    "Referer": "https://www.ryanair.com/pl/pl/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2023-08-03&dateIn=2023-09-01&isConnectedFlight=false&isReturn=true&discount=0&promoCode=&originIata=LUZ&destinationIata=LTN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2023-08-03&tpEndDate=2023-09-01&tpDiscount=0&tpPromoCode=&tpOriginIata=LUZ&tpDestinationIata=LTN",
     "Referrer-Policy": "same-origin"
   },
   "body": null,
